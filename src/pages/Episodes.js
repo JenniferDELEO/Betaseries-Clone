@@ -1,13 +1,13 @@
 import React from "react";
 import Header from "../components/Header";
 
-const Movies = () => {
+const Episodes = () => {
   return (
     <>
       <Header />
-      <h1>Tous les films</h1>
+      <h1>Episodes à voir</h1>
     </>
   );
 };
 
-export default Movies;
+export default Episodes;

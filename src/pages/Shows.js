@@ -5,7 +5,7 @@ const Shows = () => {
   return (
     <>
       <Header />
-      <h1>Shows</h1>
+      <h1>Tputes les séries</h1>
     </>
   );
 };
