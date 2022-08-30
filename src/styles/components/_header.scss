@@ -9,13 +9,13 @@
       align-items: center;
       margin: 0 20px;
 
-      a:first-child {
-        padding-left: 25px;
-      }
-
       a {
         text-decoration: none;
         color: $white;
+
+        &:hover .dropdown-content {
+          display: block;
+        }
 
         li {
           display: flex;
@@ -24,6 +24,24 @@
 
           p {
             font-size: 1.5rem;
+          }
+        }
+
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: white;
+          min-width: 160px;
+          z-index: 1;
+
+          a {
+            color: $black;
+            font-size: 1rem;
+            display: flex;
+            flex-direction: column;
+            border: 0.2px solid $black;
+            text-align: left;
+            padding-left: 5px;
           }
         }
       }
