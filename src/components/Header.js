@@ -42,7 +42,7 @@ const Header = () => {
             <div className="dropdown-content">
               <NavLink to="/shows">Toutes les séries</NavLink>
               <NavLink to="/my-shows">Mes séries</NavLink>
-              <NavLink to="/epidodes">Episodes à voir</NavLink>
+              <NavLink to="/episodes">Episodes à voir</NavLink>
               <NavLink to="/planning">Planning des sorties</NavLink>
             </div>
           </NavLink>
@@ -65,6 +65,7 @@ const Header = () => {
             </div>
           </NavLink>
         </ul>
+        <div>Mon profil</div>
       </nav>
     </div>
   );
