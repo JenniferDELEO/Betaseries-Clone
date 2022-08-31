@@ -1,11 +1,9 @@
 import React from "react";
-import Header from "../components/Header";
 
 const Shows = () => {
   return (
     <>
-      <Header />
-      <h1>Tputes les séries</h1>
+      <h1>Toutes les séries</h1>
     </>
   );
 };

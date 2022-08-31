@@ -2,31 +2,56 @@
   nav {
     font-size: 2.8rem;
     background-color: $color-2;
+    display: flex;
+    justify-content: space-between;
+    color: $white;
+    padding: 0 20px;
 
     ul {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin: 0 20px;
-
-      a:first-child {
-        padding-left: 25px;
-      }
 
       a {
         text-decoration: none;
         color: $white;
+      }
 
-        li {
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
+      .navbar a li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 30px;
+      }
 
-          p {
-            font-size: 1.5rem;
+      .navbar {
+        font-size: 1.5rem;
+        display: flex;
+        padding: 0 25px;
+        justify-content: space-between;
+
+        .navbar-dropdown:hover .dropdown-content {
+          display: block;
+        }
+
+        .navbar-dropdown .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: white;
+          min-width: 160px;
+          z-index: 1;
+
+          a {
+            color: $black;
+            font-size: 1rem;
+            display: flex;
+            flex-direction: column;
+            border: 0.2px solid $black;
+            text-align: left;
+            padding-left: 5px;
           }
         }
       }
+
       a.nav-inactive {
         color: $color-3;
 
