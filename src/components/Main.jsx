@@ -8,12 +8,14 @@ import MyShows from "../pages/MyShows";
 import Planning from "../pages/Planning";
 import Shows from "../pages/Shows";
 import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
 
 const Main = () => {
   return (
     <main>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/shows" element={<Shows />} />
         <Route path="/my-shows" element={<MyShows />} />

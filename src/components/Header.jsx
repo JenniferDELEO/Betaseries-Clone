@@ -79,7 +79,10 @@ const Header = () => {
             </div>
           </div>
         </ul>
-        <NavLink to="/login">Se connecter</NavLink>
+        <div>
+          <NavLink to="/login">Connexion</NavLink>
+          <NavLink to="/signup">Inscription</NavLink>
+        </div>
       </nav>
     </div>
   );
