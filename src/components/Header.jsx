@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { MdComputer } from "react-icons/md";
@@ -14,16 +14,45 @@ const Header = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchResultShow, setSearchResultShow] = useState([]);
   const [searchResultMovie, setSearchResultMovie] = useState([]);
+  const [showId, setShowId] = useState("");
+  const [movieId, setMovieId] = useState("");
+  const [showPicture, setShowPicture] = useState("");
+  const [moviePicture, setMoviePicture] = useState("");
 
   const token = localStorage.getItem("token");
 
+  useEffect(() => {
+    async function request() {
+      await axios
+        .get(
+          `https://api.betaseries.com/search/all?key=${process.env.REACT_APP_KEY}&query=${searchInput}&limit=12`
+        )
+        .then((res) => {
+          setSearchResultShow(res.data.shows);
+          setSearchResultMovie(res.data.movies);
+        });
+      request();
+    }
+  }, [searchInput]);
+
   axios
     .get(
-      `https://api.betaseries.com/search/all?key=${process.env.REACT_APP_KEY}&query=${searchInput}&limit=12`
+      `https://api.betaseries.com/shows/display?key=${process.env.REACT_APP_KEY}&id=${showId}`
     )
-    .then((res) => {
-      setSearchResultShow(res.data.shows);
-      setSearchResultMovie(res.data.movies);
+    .then((res) => res.data)
+    .then((data) => {
+      data.images.poster
+        ? setShowPicture(data.images.poster)
+        : setShowPicture("");
+    });
+
+  axios
+    .get(
+      `https://api.betaseries.com/movies/movie?key=${process.env.REACT_APP_KEY}&id=${movieId}`
+    )
+    .then((res) => res.data)
+    .then((data) => {
+      data.poster ? setMoviePicture(data.poster) : setMoviePicture("");
     });
 
   const handleLogOut = () => {
@@ -268,12 +297,16 @@ const Header = () => {
           </div>
         )}
       </nav>
-      {searchResultShow.map((show) => (
-        <SearchShows key={show.id} show={show} />
-      ))}
-      {searchResultMovie.map((movie) => (
-        <SearchMovies key={movie.id} movie={movie} />
-      ))}
+      <div className="searchResultsContainer">
+        <div className="searchResultsInner">
+          {searchResultShow.map((show) => (
+            <SearchShows key={show.id} show={show} />
+          ))}
+          {searchResultMovie.map((movie) => (
+            <SearchMovies key={movie.id} movie={movie} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
