@@ -79,7 +79,7 @@ const Header = () => {
             </div>
           </div>
         </ul>
-        <div>Mon profil</div>
+        <NavLink to="/login">Se connecter</NavLink>
       </nav>
     </div>
   );
