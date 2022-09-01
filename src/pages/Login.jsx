@@ -37,9 +37,9 @@ const Login = () => {
         <h2>Connexion</h2>
         <form onSubmit={handleConnection}>
           <div>
-            <label htmlFor="emailSignIn">Email :</label>
+            <label htmlFor="emailSignIn">Email/Pseudo :</label>
             <input
-              type="email"
+              type="text"
               id="emailSignIn"
               required
               value={emailSignIn}
