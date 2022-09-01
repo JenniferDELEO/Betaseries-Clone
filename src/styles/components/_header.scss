@@ -43,7 +43,7 @@
     }
 
     .navbar {
-      padding: 0 80px;
+      padding: 0 50px;
       display: flex;
       justify-content: space-between;
 
@@ -119,17 +119,18 @@
           padding-right: 25px;
           font-size: 1.5rem;
         }
-      }
 
-      .searchIcon {
-        color: $color-3;
+        .searchIcon {
+          color: $color-3;
+          padding-top: 10px;
+        }
       }
     }
   }
 
   .searchResultsContainer {
     position: fixed;
-    top: 0;
+    top: 65px;
     left: 0;
     width: 100%;
     height: 100vh;
@@ -147,6 +148,7 @@
       max-width: 640px;
       background-color: white;
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
       align-items: flex-start;
       border-radius: 5px;
