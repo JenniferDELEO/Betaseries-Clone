@@ -1,19 +1,17 @@
 import React from "react";
 
-const Card = ({ result }) => {
+const Card = ({ show }) => {
   return (
     <div>
       <img
         src={
-          result.poster
-            ? result.poster
-            : result.images.poster
-            ? result.images.poster
+          show.images.poster
+            ? show.images.poster
             : "../assets/images/pas_dimage.webp"
         }
         alt="poster"
       />
-      <p>{result.title}</p>
+      <p>{show.title}</p>
     </div>
   );
 };
