@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { MdComputer } from "react-icons/md";
 import { IoMdFilm, IoMdClose } from "react-icons/io";
 import { BsSearch } from "react-icons/bs";
+import { BiChevronDown } from "react-icons/bi";
 import axios from "axios";
+import SearchShows from "./SearchShows";
+import SearchMovies from "./SearchMovies";
 
 const Header = () => {
   let navigate = useNavigate();
@@ -12,26 +15,31 @@ const Header = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchResultShow, setSearchResultShow] = useState([]);
   const [searchResultMovie, setSearchResultMovie] = useState([]);
-  const [showId, setShowId] = useState("");
-  const [movieId, setMovieId] = useState("");
 
   const token = localStorage.getItem("token");
+  let config = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
 
-  axios
-    .get(
-      `https://api.betaseries.com/search/all?key=${process.env.REACT_APP_KEY}&query=${searchInput}&limit=12`
-    )
-    .then((res) => {
-      setSearchResultShow(res.data.shows);
-      setSearchResultMovie(res.data.movies);
-    });
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.betaseries.com/shows/search?key=${process.env.REACT_APP_KEY}&title=${searchInput}`,
+        config
+      )
+      .then((res) => res.data)
+      .then((data) => setSearchResultShow(data.shows));
 
-  axios
-    .get(
-      `https://api.betaseries.com/shows/display?key=${process.env.REACT_APP_KEY}&id=${showId}`
-    )
-    .then((res) => res.data)
-    .then((data) => {});
+    axios
+      .get(
+        `https://api.betaseries.com/movies/search?key=${process.env.REACT_APP_KEY}&title=${searchInput}`,
+        config
+      )
+      .then((res) => res.data)
+      .then((data) => setSearchResultMovie(data.movies));
+  }, [searchInput]);
 
   const handleLogOut = () => {
     localStorage.setItem("token", "");
@@ -65,7 +73,10 @@ const Header = () => {
                 <div>
                   <IoMdClose
                     size={20}
-                    onClick={() => setSearch(!search)}
+                    onClick={() => {
+                      setSearch(!search);
+                      setSearchInput("");
+                    }}
                     style={{ cursor: "pointer" }}
                   />
                 </div>
@@ -182,7 +193,10 @@ const Header = () => {
               <div>
                 <IoMdClose
                   size={20}
-                  onClick={() => setSearch(!search)}
+                  onClick={() => {
+                    setSearch(!search);
+                    setSearchInput("");
+                  }}
                   style={{ cursor: "pointer" }}
                 />
               </div>
@@ -278,12 +292,28 @@ const Header = () => {
       {searchInput.length !== 0 ? (
         <div className="searchResultsContainer">
           <div className="searchResultsInner">
-            {/* {searchResultShow.map((show) => (
-            <SearchShows key={show.id} show={show} />
-          ))}
-          {searchResultMovie.map((movie) => (
-            <SearchMovies key={movie.id} movie={movie} />
-          ))} */}
+            <div className="resultsContainer">
+              <div>
+                <h2>Séries</h2>
+                {searchResultShow.map((show) => (
+                  <SearchShows key={show.id} show={show} />
+                ))}
+                <div className="moreResults">
+                  <BiChevronDown />
+                  <p>Plus de résultats...</p>
+                </div>
+              </div>
+              <div>
+                <h2>Films</h2>
+                {searchResultMovie.map((movie) => (
+                  <SearchMovies key={movie.id} movie={movie} />
+                ))}
+                <div className="moreResults">
+                  <BiChevronDown />
+                  <p>Plus de résultats...</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       ) : (
