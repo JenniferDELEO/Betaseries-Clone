@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Card from "../components/Card";
+import ShowCard from "../components/ShowCard";
 
 const Shows = () => {
   const [showResults, setShowResults] = useState([]);
@@ -30,7 +30,7 @@ const Shows = () => {
     <>
       <h1>Annuaire des séries</h1>
       {showResults.map((show) => (
-        <Card result={show} key={show.id} />
+        <ShowCard show={show} key={show.id} />
       ))}
     </>
   );

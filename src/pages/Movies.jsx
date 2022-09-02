@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Card from "../components/Card";
+import MovieCard from "../components/MovieCard";
 
 const Movies = () => {
   const [movieResults, setMovieResults] = useState([]);
@@ -29,7 +29,7 @@ const Movies = () => {
     <>
       <h1>Annuaire des films</h1>
       {movieResults.map((movie) => (
-        <Card result={movie} key={movie.id} />
+        <MovieCard movie={movie} key={movie.id} />
       ))}
     </>
   );
