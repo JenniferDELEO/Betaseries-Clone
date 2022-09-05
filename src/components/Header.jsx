@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { MdComputer } from "react-icons/md";
@@ -15,6 +15,8 @@ const Header = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchResultShow, setSearchResultShow] = useState([]);
   const [searchResultMovie, setSearchResultMovie] = useState([]);
+  const [nbpp, setNbpp] = useState(5);
+  const ref = useRef(null);
 
   const token = localStorage.getItem("token");
   let config = {
@@ -26,7 +28,7 @@ const Header = () => {
   useEffect(() => {
     axios
       .get(
-        `https://api.betaseries.com/shows/search?key=${process.env.REACT_APP_KEY}&title=${searchInput}`,
+        `https://api.betaseries.com/shows/search?key=${process.env.REACT_APP_KEY}&title=${searchInput}&nbpp=${nbpp}`,
         config
       )
       .then((res) => res.data)
@@ -34,16 +36,26 @@ const Header = () => {
 
     axios
       .get(
-        `https://api.betaseries.com/movies/search?key=${process.env.REACT_APP_KEY}&title=${searchInput}`,
+        `https://api.betaseries.com/movies/search?key=${process.env.REACT_APP_KEY}&title=${searchInput}&nbpp=${nbpp}`,
         config
       )
       .then((res) => res.data)
       .then((data) => setSearchResultMovie(data.movies));
-  }, [searchInput]);
+  }, [searchInput, nbpp]);
 
   const handleLogOut = () => {
     localStorage.setItem("token", "");
     navigate("../", { replace: true });
+  };
+
+  async function handleFocusOnSearch() {
+    await setSearch(!search);
+    ref.current.focus();
+  }
+
+  const handleSearchClose = () => {
+    setSearch(!search);
+    setSearchInput("");
   };
 
   return (
@@ -68,15 +80,13 @@ const Header = () => {
                     placeholder="Rechercher une série, un film"
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
+                    ref={ref}
                   />
                 </form>
                 <div>
                   <IoMdClose
                     size={20}
-                    onClick={() => {
-                      setSearch(!search);
-                      setSearchInput("");
-                    }}
+                    onClick={handleSearchClose}
                     style={{ cursor: "pointer" }}
                   />
                 </div>
@@ -163,7 +173,7 @@ const Header = () => {
                 <div className="searchIcon">
                   <BsSearch
                     size={20}
-                    onClick={() => setSearch(!search)}
+                    onClick={handleFocusOnSearch}
                     style={{ cursor: "pointer" }}
                   />
                 </div>
@@ -188,15 +198,13 @@ const Header = () => {
                   placeholder="Rechercher une série, un film"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
+                  ref={ref}
                 />
               </form>
               <div>
                 <IoMdClose
                   size={20}
-                  onClick={() => {
-                    setSearch(!search);
-                    setSearchInput("");
-                  }}
+                  onClick={handleSearchClose}
                   style={{ cursor: "pointer" }}
                 />
               </div>
@@ -281,7 +289,7 @@ const Header = () => {
               <div className="searchIcon">
                 <BsSearch
                   size={20}
-                  onClick={() => setSearch(!search)}
+                  onClick={handleFocusOnSearch}
                   style={{ cursor: "pointer" }}
                 />
               </div>
@@ -291,7 +299,11 @@ const Header = () => {
       </nav>
       {searchInput.length !== 0 ? (
         <div className="searchResultsContainer">
-          <div className="searchResultsInner">
+          <div
+            className={
+              nbpp === 10 ? "searchResultsInnerLong" : "searchResultsInner"
+            }
+          >
             <div className="resultsContainer">
               <div>
                 <h2>Séries</h2>
@@ -300,7 +312,11 @@ const Header = () => {
                 ))}
                 <div className="moreResults">
                   <BiChevronDown />
-                  <p>Plus de résultats...</p>
+                  <p onClick={() => setNbpp(10)}>
+                    {nbpp === 10
+                      ? "Plus de résultats sur l'annuaire"
+                      : "Plus de résultats..."}
+                  </p>
                 </div>
               </div>
               <div>
@@ -310,7 +326,11 @@ const Header = () => {
                 ))}
                 <div className="moreResults">
                   <BiChevronDown />
-                  <p>Plus de résultats...</p>
+                  <p onClick={() => setNbpp(10)}>
+                    {nbpp === 10
+                      ? "Plus de résultats sur l'annuaire"
+                      : "Plus de résultats..."}
+                  </p>
                 </div>
               </div>
             </div>
