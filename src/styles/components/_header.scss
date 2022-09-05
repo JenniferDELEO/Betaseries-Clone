@@ -56,14 +56,14 @@
           color: $white;
         }
 
-        .navbar a li {
+        .navbarIntern a li {
           display: flex;
           justify-content: space-between;
           align-items: center;
           padding-left: 30px;
         }
 
-        .navbar {
+        .navbarIntern {
           font-size: 1.5rem;
           display: flex;
           padding: 0 25px;
@@ -124,6 +124,23 @@
           color: $color-3;
           padding-top: 10px;
         }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .header {
+    .title,
+    .mediaQuery {
+      display: none;
+    }
+    nav {
+      font-size: 1.8rem;
+
+      .navbar {
+        padding: 0;
+        padding-right: 10px;
       }
     }
   }
