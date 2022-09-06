@@ -1,0 +1,49 @@
+.shows {
+  margin: 0 auto;
+
+  .searchFilter {
+    input {
+    }
+
+    .selectContainer {
+      position: relative;
+      background: #ffffff;
+      width: 25%;
+      cursor: pointer;
+      padding: 4px 6px;
+      border: none;
+      text-align: left;
+      display: block;
+
+      span {
+        padding-left: 10px;
+      }
+
+      .menu {
+        background: #ffffff;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 300px;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        visibility: hidden;
+      }
+      .menu.actif {
+        background: #ffffff;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 300px;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+        opacity: 1;
+        visibility: visible;
+
+        p {
+          text-decoration: none;
+          display: block;
+        }
+      }
+    }
+  }
+}
