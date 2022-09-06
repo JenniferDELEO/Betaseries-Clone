@@ -1,49 +1,196 @@
 .shows {
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  width: 85%;
+  margin-top: 20px;
+  font-size: 12px;
 
   .searchFilter {
-    input {
+    flex: 1;
+    padding: 0 15px;
+
+    .searchInput {
+      display: flex;
+      padding: 0 5px;
+      align-items: center;
+      background-color: #ffffff;
+      margin-top: 5px;
+
+      input {
+        width: 100%;
+        font-size: 11px;
+        padding: 5px 5px;
+        padding-left: 10px;
+        border: none;
+        vertical-align: middle;
+
+        &::placeholder {
+          vertical-align: middle;
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
     }
 
     .selectContainer {
       position: relative;
       background: #ffffff;
-      width: 25%;
-      cursor: pointer;
-      padding: 4px 6px;
+      width: 100%;
       border: none;
       text-align: left;
       display: block;
+      margin: 15px 6px;
+
+      .reinitiate {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 40px;
+      }
+
+      .selectTitle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 40px;
+        cursor: pointer;
+        font-weight: 500;
+        color: black;
+        font-size: 12px;
+      }
+
+      svg {
+        padding-left: 10px;
+        color: $color-2;
+        width: 45px;
+        padding-right: 10px;
+      }
 
       span {
-        padding-left: 10px;
+        vertical-align: top;
+        width: 70%;
+        margin-left: 10px;
       }
 
       .menu {
-        background: #ffffff;
         position: absolute;
-        top: 60px;
         left: 0;
-        width: 300px;
-        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
         opacity: 0;
         visibility: hidden;
       }
-      .menu.actif {
-        background: #ffffff;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 300px;
-        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+      .menu-actif {
+        background: #fafafa;
         opacity: 1;
         visibility: visible;
+        padding: 5px 0;
 
         p {
           text-decoration: none;
+          text-align: center;
+          border: 0.2px solid rgba(128, 128, 128, 0.338);
+          border-radius: 5px;
+          margin: 10px 10px;
+          padding: 5px;
+          background-color: #ffffff;
+          color: gray;
+        }
+
+        select {
+          text-decoration: none;
           display: block;
+          width: 88%;
+          padding: 5px;
+          text-align: center;
+          border: 0.2px solid rgba(128, 128, 128, 0.338);
+          border-radius: 5px;
+          margin: 15px;
+          background-color: #ffffff;
+          color: gray;
+        }
+
+        input {
+          width: 90%;
+          font-size: 11px;
+          padding: 5px 5px;
+          padding-left: 10px;
+          border: none;
+          display: block;
+          margin: 5px auto;
+          border: 0.2px solid rgba(128, 128, 128, 0.2);
+
+          &::placeholder {
+            vertical-align: middle;
+          }
+
+          &:focus {
+            outline: none;
+          }
+        }
+
+        button {
+          text-decoration: none;
+          display: block;
+          width: 90%;
+          padding: 5px;
+          text-align: center;
+          border: 0.2px solid rgba(128, 128, 128, 0.338);
+          border-radius: 5px;
+          margin: 15px;
+          background-color: #ffffff;
+          color: gray;
+        }
+
+        .saveParagraph {
+          border: none;
+          color: black;
+          background: #fafafa;
+          font-size: 14px;
+          padding: 0;
+
+          span {
+            font-weight: 700;
+          }
+        }
+      }
+
+      .initiales-actif {
+        background: #fafafa;
+        opacity: 1;
+        visibility: visible;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        p {
+          text-decoration: none;
+          padding: 5px;
+          text-align: center;
+          border: 0.2px solid rgba(128, 128, 128, 0.338);
+          border-radius: 5px;
+          background-color: #ffffff;
+          color: gray;
+          width: 86px;
+          margin: 5px 10px;
         }
       }
     }
+    .selectTitleOpen {
+      background-color: $color-2;
+      color: white;
+
+      span {
+        color: #ffffff;
+      }
+
+      svg {
+        color: white;
+      }
+    }
+  }
+  .listShows {
+    flex: 2.5;
   }
 }

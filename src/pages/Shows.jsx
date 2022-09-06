@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ShowCard from "../components/ShowCard";
 import { countries, durations, initiales } from "../lib/caracteristics";
 import { BiCaretRightSquare, BiRotateLeft } from "react-icons/bi";
-import { FaTheaterMasks } from "react-icons/fa";
+import { FaTheaterMasks, FaSearch } from "react-icons/fa";
 import {
   BsCalendarCheck,
   BsClock,
@@ -12,7 +12,7 @@ import {
   BsBookmark,
 } from "react-icons/bs";
 import { MdTimer } from "react-icons/md";
-import { FiSliders } from "react-icons/fi";
+import { FiSliders, FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 const Shows = () => {
   const [showResults, setShowResults] = useState([]);
@@ -102,14 +102,25 @@ const Shows = () => {
   return (
     <div className="shows">
       <div className="searchFilter">
-        <input type="text" placeholder="Nom de la série" />
-        <button
-          className="selectContainer"
-          type="button"
-          onClick={openingPlatform}
-        >
-          <BiCaretRightSquare />
-          <span>Plateforme</span>
+        <div className="searchInput">
+          <FaSearch size={15} />
+          <input type="text" placeholder="Nom de la série" />
+        </div>
+        <div className="selectContainer">
+          <div
+            onClick={openingPlatform}
+            className={
+              openPlatform ? `selectTitle selectTitleOpen` : "selectTitle"
+            }
+          >
+            <BiCaretRightSquare size={25} />
+            <span>Plateforme</span>
+            {openPlatform ? (
+              <FiChevronUp size={20} />
+            ) : (
+              <FiChevronDown size={20} />
+            )}
+          </div>
           <div className={openPlatform ? "menu-actif" : "menu"}>
             {platforms.map((platform) => (
               <p key={platform.id} value={platform.id}>
@@ -117,10 +128,22 @@ const Shows = () => {
               </p>
             ))}
           </div>
-        </button>
-        <button className="selectContainer" onClick={openingGenre}>
-          <FaTheaterMasks />
-          <span>Genre</span>
+        </div>
+        <div className="selectContainer">
+          <div
+            className={
+              openGenre ? `selectTitle selectTitleOpen` : "selectTitle"
+            }
+            onClick={openingGenre}
+          >
+            <FaTheaterMasks size={25} />
+            <span>Genre</span>
+            {openGenre ? (
+              <FiChevronUp size={20} />
+            ) : (
+              <FiChevronDown size={20} />
+            )}
+          </div>
           <div className={openGenre ? "menu-actif" : "menu"}>
             {Object.keys(genres).map((key, index) => (
               <p key={index} value={key}>
@@ -128,26 +151,43 @@ const Shows = () => {
               </p>
             ))}
           </div>
-        </button>
-        <button
-          className="selectContainer"
-          type="button"
-          onClick={openingDiffusion}
-        >
-          <BsCalendarCheck />
-          <span>Diffusion</span>
+        </div>
+        <div className="selectContainer">
+          <div
+            className={
+              openDiffusion ? `selectTitle selectTitleOpen` : "selectTitle"
+            }
+            onClick={openingDiffusion}
+          >
+            <BsCalendarCheck size={25} />
+            <span>Diffusion</span>
+            {openDiffusion ? (
+              <FiChevronUp size={20} />
+            ) : (
+              <FiChevronDown size={20} />
+            )}
+          </div>
           <div className={openDiffusion ? "menu-actif" : "menu"}>
             <p value="Continuing">En cours</p>
             <p value="Ended">Terminée</p>
           </div>
-        </button>
-        <button
-          type="button"
-          className="selectContainer"
-          onClick={openingCreationDate}
-        >
-          <BsClock />
-          <span>Année de création</span>
+        </div>
+        <div className="selectContainer">
+          <div
+            className={
+              openCreationDate ? `selectTitle selectTitleOpen` : "selectTitle"
+            }
+            onClick={openingCreationDate}
+          >
+            <BsClock size={25} />
+            <span>Année de création</span>
+            {openCreationDate ? (
+              <FiChevronUp size={20} />
+            ) : (
+              <FiChevronDown size={20} />
+            )}
+          </div>
+
           <div className={openCreationDate ? "menu-actif" : "menu"}>
             <p value="2022">2022</p>
             <p value="2021">2021</p>
@@ -155,21 +195,30 @@ const Shows = () => {
             <p value="2019">2019</p>
             <p value="Autre">Autre</p>
           </div>
-        </button>
-        <button
-          type="button"
-          className="selectContainer"
-          onClick={openingCountry}
-        >
-          <BsFlag />
-          <span>Pays</span>
+        </div>
+        <div className="selectContainer">
+          <div
+            className={
+              openCountry ? `selectTitle selectTitleOpen` : "selectTitle"
+            }
+            onClick={openingCountry}
+          >
+            <BsFlag size={25} />
+            <span>Pays</span>
+            {openCountry ? (
+              <FiChevronUp size={20} />
+            ) : (
+              <FiChevronDown size={20} />
+            )}
+          </div>
           <div className={openCountry ? "menu-actif" : "menu"}>
             <p value="États-Unis">États-Unis</p>
             <p value="Royaume-Uni">Royaume-Uni</p>
             <p value="Japon">Japon</p>
             <p value="Corée du Sud">Corée du Sud</p>
             <p value="France">France</p>
-            <select name="other-country" value="Sélectionner un pays">
+            <select name="other-country">
+              <option value="">Sélectionner un pays</option>
               {countries.map((country) => (
                 <option key={country} value={country}>
                   {country}
@@ -177,14 +226,24 @@ const Shows = () => {
               ))}
             </select>
           </div>
-        </button>
-        <button
-          type="button"
-          className="selectContainer"
-          onClick={openingDurationEpisode}
-        >
-          <MdTimer />
-          <span>Durée d'un épisode</span>
+        </div>
+        <div className="selectContainer">
+          <div
+            className={
+              openDurationEpisode
+                ? `selectTitle selectTitleOpen`
+                : "selectTitle"
+            }
+            onClick={openingDurationEpisode}
+          >
+            <MdTimer size={25} />
+            <span>Durée d'un épisode</span>
+            {openDurationEpisode ? (
+              <FiChevronUp size={20} />
+            ) : (
+              <FiChevronDown size={20} />
+            )}
+          </div>
           <div className={openDurationEpisode ? "menu-actif" : "menu"}>
             {durations.map((duration) => (
               <p key={duration} value={duration}>
@@ -192,52 +251,78 @@ const Shows = () => {
               </p>
             ))}
           </div>
-        </button>
-        <button type="button" className="selectContainer" onClick={openingNew}>
-          <FiSliders />
-          <span>Autres options</span>
+        </div>
+        <div className="selectContainer">
+          <div
+            className={openNew ? `selectTitle selectTitleOpen` : "selectTitle"}
+            onClick={openingNew}
+          >
+            <FiSliders size={25} />
+            <span>Autres options</span>
+            {openNew ? <FiChevronUp size={20} /> : <FiChevronDown size={20} />}
+          </div>
           <div className={openNew ? "menu-actif" : "menu"}>
             <p>Uniquement les séries que je ne suis pas</p>
             <p>Uniquement les séries que je suis</p>
           </div>
-        </button>
-        <button
-          type="button"
-          className="selectContainer"
-          onClick={openingInitiales}
-        >
-          <BsCursorText />
-          <span>Initiales</span>
-          <div className={openInitiales ? "menu-actif" : "menu"}>
+        </div>
+        <div className="selectContainer">
+          <div
+            className={
+              openInitiales ? `selectTitle selectTitleOpen` : "selectTitle"
+            }
+            onClick={openingInitiales}
+          >
+            <BsCursorText size={25} />
+            <span>Initiales</span>
+            {openInitiales ? (
+              <FiChevronUp size={20} />
+            ) : (
+              <FiChevronDown size={20} />
+            )}
+          </div>
+          <div className={openInitiales ? "initiales-actif" : "menu"}>
             {initiales.map((initiale) => (
               <p key={initiale} value={initiale}>
                 {initiale}
               </p>
             ))}
           </div>
-        </button>
-        <button
-          type="button"
-          className="selectContainer"
-          onClick={openingSaveFilter}
-        >
-          <BsBookmark />
-          <span>Filtre sauvegardé</span>
+        </div>
+        <div className="selectContainer">
+          <div
+            className={
+              openSaveFilter ? `selectTitle selectTitleOpen` : "selectTitle"
+            }
+            onClick={openingSaveFilter}
+          >
+            <BsBookmark size={25} />
+            <span>Filtre sauvegardé</span>
+            {openSaveFilter ? (
+              <FiChevronUp size={20} />
+            ) : (
+              <FiChevronDown size={20} />
+            )}
+          </div>
           <div className={openSaveFilter ? "menu-actif" : "menu"}>
             <input type="text" placeholder="Donner un nom à ce filtre" />
-            <div>Sauvegardé ce filtre</div>
-            <p>
+            <button type="button">Sauvegardé ce filtre</button>
+            <p className="saveParagraph">
               <span>Mes filtres</span>
             </p>
-            <p>Vous n'avez pas encore de filtres sauvegardés</p>
+            <p className="saveParagraph">
+              Vous n'avez pas encore de filtres sauvegardés
+            </p>
+          </div>
+        </div>
+        <button type="button" className="selectContainer">
+          <div className="reinitiate">
+            <BiRotateLeft size={25} />
+            <span>Réinitialiser les filtres</span>
           </div>
         </button>
-        <button type="button" className="selectContainer">
-          <BiRotateLeft />
-          <span>Réinitialiser les filtres</span>
-        </button>
       </div>
-      <div>
+      <div className="listShows">
         <h1>Annuaire des séries</h1>
         {showResults.map((show) => (
           <ShowCard show={show} key={show.id} />
