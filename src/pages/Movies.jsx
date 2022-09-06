@@ -15,7 +15,7 @@ const Movies = () => {
     async function request() {
       await axios
         .get(
-          `https://api.betaseries.com/movies/search?key=${process.env.REACT_APP_KEY}&order=popularity&nbpp=12`,
+          `https://api.betaseries.com/movies/search?key=${process.env.REACT_APP_KEY}&v=3.0&order=popularity&nbpp=12`,
           config
         )
         .then((res) => res.data)
