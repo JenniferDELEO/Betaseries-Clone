@@ -28,7 +28,7 @@ const Header = () => {
   useEffect(() => {
     axios
       .get(
-        `https://api.betaseries.com/shows/search?key=${process.env.REACT_APP_KEY}&title=${searchInput}&nbpp=${nbpp}`,
+        `https://api.betaseries.com/shows/search?key=${process.env.REACT_APP_KEY}&v=3.0&title=${searchInput}&nbpp=${nbpp}`,
         config
       )
       .then((res) => res.data)
@@ -36,7 +36,7 @@ const Header = () => {
 
     axios
       .get(
-        `https://api.betaseries.com/movies/search?key=${process.env.REACT_APP_KEY}&title=${searchInput}&nbpp=${nbpp}`,
+        `https://api.betaseries.com/movies/search?key=${process.env.REACT_APP_KEY}&v=3.0&title=${searchInput}&nbpp=${nbpp}`,
         config
       )
       .then((res) => res.data)
@@ -100,7 +100,7 @@ const Header = () => {
                     <li>betaseries</li>
                   </NavLink>
                 </div>
-                <div className="navbar">
+                <div className="navbarIntern">
                   <NavLink
                     to="/"
                     className={(nav) =>
@@ -114,7 +114,7 @@ const Header = () => {
                           width: "40px",
                         }}
                       />
-                      <p>Accueil</p>
+                      <p className="mediaQuery">Accueil</p>
                     </li>
                   </NavLink>
                   <div className="navbar-dropdown">
@@ -131,7 +131,7 @@ const Header = () => {
                             width: "40px",
                           }}
                         />
-                        <p>Séries</p>
+                        <p className="mediaQuery">Séries</p>
                       </li>
                     </NavLink>
                     <div className="dropdown-content">
@@ -155,7 +155,7 @@ const Header = () => {
                             width: "40px",
                           }}
                         />
-                        <p>Films</p>
+                        <p className="mediaQuery">Films</p>
                       </li>
                     </NavLink>
                     <div className="dropdown-content">
@@ -218,7 +218,7 @@ const Header = () => {
                   <li>betaseries</li>
                 </NavLink>
               </div>
-              <div className="navbar">
+              <div className="navbarIntern">
                 <NavLink
                   to="/"
                   className={(nav) =>
@@ -232,7 +232,7 @@ const Header = () => {
                         width: "40px",
                       }}
                     />
-                    <p>Accueil</p>
+                    <p className="mediaQuery">Accueil</p>
                   </li>
                 </NavLink>
                 <div className="navbar-dropdown">
@@ -249,7 +249,7 @@ const Header = () => {
                           width: "40px",
                         }}
                       />
-                      <p>Séries</p>
+                      <p className="mediaQuery">Séries</p>
                     </li>
                   </NavLink>
                   <div className="dropdown-content">
@@ -273,7 +273,7 @@ const Header = () => {
                           width: "40px",
                         }}
                       />
-                      <p>Films</p>
+                      <p className="mediaQuery">Films</p>
                     </li>
                   </NavLink>
                   <div className="dropdown-content">

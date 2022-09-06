@@ -13,7 +13,7 @@ const SignUp = () => {
     e.preventDefault();
     axios
       .post(
-        `https://api.betaseries.com/members/signup?key=${process.env.REACT_APP_KEY}`,
+        `https://api.betaseries.com/members/signup?key=${process.env.REACT_APP_KEY}&v=3.0`,
         {
           login: pseudoSignUp,
           password: md5(passwordSignUp),

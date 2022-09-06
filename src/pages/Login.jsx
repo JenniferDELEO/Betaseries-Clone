@@ -13,7 +13,7 @@ const Login = () => {
     try {
       await axios
         .post(
-          `https://api.betaseries.com/members/auth?key=${process.env.REACT_APP_KEY}`,
+          `https://api.betaseries.com/members/auth?key=${process.env.REACT_APP_KEY}&v=3.0`,
           {
             login: emailSignIn,
             password: md5(passwordSignIn),
