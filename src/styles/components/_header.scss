@@ -129,7 +129,7 @@
   }
 }
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 1050px) {
   .header {
     .title,
     .mediaQuery {
@@ -141,7 +141,23 @@
       .navbar {
         padding: 0;
         padding-right: 10px;
+
+        .navbarIntern a li {
+          padding-left: 0 !important;
+        }
       }
+    }
+  }
+}
+
+@media screen and (min-width: 765px) {
+  .header {
+    nav {
+      font-size: 2.5rem;
+    }
+    .title {
+      display: initial;
+      padding-left: 25px;
     }
   }
 }

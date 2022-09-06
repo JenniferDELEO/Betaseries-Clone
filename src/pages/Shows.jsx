@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ShowCard from "../components/ShowCard";
-import Select from "react-select";
 
 const Shows = () => {
   const [showResults, setShowResults] = useState([]);
