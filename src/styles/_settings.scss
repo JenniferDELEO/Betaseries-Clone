@@ -7,8 +7,14 @@
   src: url(../assets/fonts/Muli-Light.ttf);
 }
 
+@font-face {
+  font-family: "title";
+  src: url(../assets/fonts/Helvetica-regular.ttf);
+}
+
 $font-1: "font-1", sans-serif;
 $font-2: "font-2", sans-serif;
+$title: "title", sans-serif;
 
 $color-1: rgb(238, 238, 238);
 $color-2: #3b8dd0;
@@ -23,6 +29,11 @@ $focus: #ecf6fd;
   padding: 0;
   box-sizing: border-box;
   font-family: $font-1;
+}
+
+h1 {
+  font-family: $title;
+  letter-spacing: 1px;
 }
 
 body {

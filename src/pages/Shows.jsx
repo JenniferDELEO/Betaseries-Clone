@@ -13,6 +13,7 @@ import {
 } from "react-icons/bs";
 import { MdTimer } from "react-icons/md";
 import { FiSliders, FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 const Shows = () => {
   const [showResults, setShowResults] = useState([]);
@@ -94,6 +95,7 @@ const Shows = () => {
         .then((res) => res.data)
         .then((data) => {
           setShowResults(data.shows);
+          console.log(Object.values(data.shows[0].genres));
         });
     }
     request();
@@ -323,10 +325,17 @@ const Shows = () => {
         </button>
       </div>
       <div className="listShows">
-        <h1>Annuaire des séries</h1>
-        {showResults.map((show) => (
-          <ShowCard show={show} key={show.id} />
-        ))}
+        <div className="mainTitle">
+          <h1>Annuaire des séries</h1>
+          <p className="sorting">
+            Popularité <IoMdArrowDropdown />
+          </p>
+        </div>
+        <div className="showCard">
+          {showResults.map((show) => (
+            <ShowCard show={show} key={show.id} />
+          ))}
+        </div>
       </div>
     </div>
   );
