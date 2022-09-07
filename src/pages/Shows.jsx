@@ -14,6 +14,12 @@ import {
 import { MdTimer } from "react-icons/md";
 import { FiSliders, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { useSearchParams } from "react-router-dom";
+
+function toObject(searchParams) {
+  const res = {};
+  searchParams.forEach((value, key) => (res[key] = value));
+}
 
 const Shows = () => {
   const [showResults, setShowResults] = useState([]);
@@ -28,6 +34,7 @@ const Shows = () => {
   const [openNew, setOpenNew] = useState(false);
   const [openInitiales, setOpenInitiales] = useState(false);
   const [openSaveFilter, setOpenSaveFilter] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const openingPlatform = () => {
     setOpenPlatform(!openPlatform);
@@ -78,7 +85,10 @@ const Shows = () => {
           `https://api.betaseries.com/platforms/list?key=${process.env.REACT_APP_KEY}&v=3.0`
         )
         .then((res) => res.data)
-        .then((data) => setPlatforms(data.platforms.svod));
+        .then((data) => {
+          setPlatforms(data.platforms.svod);
+          console.log(data.platforms.svod);
+        });
 
       await axios
         .get(
@@ -89,17 +99,14 @@ const Shows = () => {
 
       await axios
         .get(
-          `https://api.betaseries.com/shows/list?key=${process.env.REACT_APP_KEY}&v=3.0&order=popularity&filter=new`,
+          `https://api.betaseries.com/shows/list?key=${process.env.REACT_APP_KEY}&v=3.0&${searchParams}&order=popularity&filter=new`,
           config
         )
         .then((res) => res.data)
-        .then((data) => {
-          setShowResults(data.shows);
-          console.log(Object.values(data.shows[0].genres));
-        });
+        .then((data) => setShowResults(data.shows));
     }
     request();
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="shows">
@@ -125,7 +132,17 @@ const Shows = () => {
           </div>
           <div className={openPlatform ? "menu-actif" : "menu"}>
             {platforms.map((platform) => (
-              <p key={platform.id} value={platform.id}>
+              <p
+                key={platform.id}
+                value={searchParams.get("platforms") || ""}
+                onClick={(e) => {
+                  setSearchParams({
+                    ...toObject(searchParams),
+                    platforms: e.target.value,
+                  });
+                  console.log(e.target.value);
+                }}
+              >
                 {platform.name}
               </p>
             ))}
