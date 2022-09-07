@@ -104,7 +104,7 @@ const Header = () => {
                   <NavLink
                     to="/"
                     className={(nav) =>
-                      nav.isActive ? "nav-active" : "nav-inactive"
+                      nav.isActive ? `nav nav-active` : "nav"
                     }
                   >
                     <li>
@@ -121,7 +121,7 @@ const Header = () => {
                     <NavLink
                       to="/shows"
                       className={(nav) =>
-                        nav.isActive ? "nav-active" : "nav-inactive"
+                        nav.isActive ? `nav nav-active` : "nav"
                       }
                     >
                       <li>
@@ -135,17 +135,37 @@ const Header = () => {
                       </li>
                     </NavLink>
                     <div className="dropdown-content">
-                      <NavLink to="/shows">Toutes les séries</NavLink>
-                      <NavLink to="/my-shows">Mes séries</NavLink>
-                      <NavLink to="/episodes">Episodes à voir</NavLink>
-                      <NavLink to="/planning">Planning des sorties</NavLink>
+                      <NavLink
+                        to="/shows"
+                        className={(nav) => (nav.isActive ? "navDropdown" : "")}
+                      >
+                        Toutes les séries
+                      </NavLink>
+                      <NavLink
+                        to="/my-shows"
+                        className={(nav) => (nav.isActive ? "navDropdown" : "")}
+                      >
+                        Mes séries
+                      </NavLink>
+                      <NavLink
+                        to="/episodes"
+                        className={(nav) => (nav.isActive ? "navDropdown" : "")}
+                      >
+                        Episodes à voir
+                      </NavLink>
+                      <NavLink
+                        to="/planning"
+                        className={(nav) => (nav.isActive ? "navDropdown" : "")}
+                      >
+                        Planning des sorties
+                      </NavLink>
                     </div>
                   </div>
                   <div className="navbar-dropdown">
                     <NavLink
                       to="/movies"
                       className={(nav) =>
-                        nav.isActive ? "nav-active" : "nav-inactive"
+                        nav.isActive ? `nav nav-active` : "nav"
                       }
                     >
                       <li>
@@ -159,8 +179,18 @@ const Header = () => {
                       </li>
                     </NavLink>
                     <div className="dropdown-content">
-                      <NavLink to="/movies">Tous les films</NavLink>
-                      <NavLink to="/my-movies">Mes films</NavLink>
+                      <NavLink
+                        to="/movies"
+                        className={(nav) => (nav.isActive ? "navDropdown" : "")}
+                      >
+                        Tous les films
+                      </NavLink>
+                      <NavLink
+                        to="/my-movies"
+                        className={(nav) => (nav.isActive ? "navDropdown" : "")}
+                      >
+                        Mes films
+                      </NavLink>
                     </div>
                   </div>
                 </div>
