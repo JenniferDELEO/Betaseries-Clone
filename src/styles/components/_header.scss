@@ -2,11 +2,14 @@
   nav {
     background-color: $color-2;
     color: $white;
+    height: 70px;
 
     .searchContainer {
       display: flex;
       justify-content: space-between;
-      padding: 0 20px;
+      padding: 0 50px;
+      align-items: center;
+      height: 100%;
 
       .title {
         flex: 1;
@@ -14,10 +17,6 @@
         a {
           text-decoration: none;
           color: $white;
-
-          li {
-            font-size: 15px;
-          }
         }
       }
 
@@ -25,15 +24,19 @@
         flex: 4;
         display: flex;
         justify-content: space-between;
+        align-items: center;
 
         .searchInput {
           width: 65vw;
           background-color: transparent;
-          color: $white;
+          color: #fff;
           border: none;
+          font-size: 18px;
+          height: 100%;
+          padding-left: 3px;
 
           &::placeholder {
-            color: $gray;
+            color: #c1e1fa;
           }
 
           &:focus {
