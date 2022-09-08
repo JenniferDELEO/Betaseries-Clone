@@ -1,7 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import ShowCard from "../components/ShowCard";
-import { countries, durations, initiales } from "../lib/caracteristics";
+import {
+  countries,
+  otherCountries,
+  durations,
+  initiales,
+} from "../lib/caracteristics";
 import { BiCaretRightSquare, BiRotateLeft } from "react-icons/bi";
 import { FaTheaterMasks, FaSearch } from "react-icons/fa";
 import {
@@ -14,12 +19,6 @@ import {
 import { MdTimer } from "react-icons/md";
 import { FiSliders, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { useSearchParams } from "react-router-dom";
-
-function toObject(searchParams) {
-  const res = {};
-  searchParams.forEach((value, key) => (res[key] = value));
-}
 
 const Shows = () => {
   const [showResults, setShowResults] = useState([]);
@@ -34,7 +33,15 @@ const Shows = () => {
   const [openNew, setOpenNew] = useState(false);
   const [openInitiales, setOpenInitiales] = useState(false);
   const [openSaveFilter, setOpenSaveFilter] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [filterPlatform, setFilterPlatform] = useState([]);
+  const [filterOrder, setFilterOrder] = useState("popularity");
+  const [filterFilter, setFilterFilter] = useState("new");
+  const [filterGenre, setFilterGenre] = useState([]);
+  const [filterDiffusion, setFilterDiffusion] = useState([]);
+  const [filterCreationDate, setFilterCreationDate] = useState([]);
+  const [filterCountry, setFilterCountry] = useState([]);
+  const [filterEpisodeDuration, setFilterEpisodeDuration] = useState([]);
+  const [filterInitiale, setFilterInitiale] = useState("");
 
   const openingPlatform = () => {
     setOpenPlatform(!openPlatform);
@@ -87,7 +94,6 @@ const Shows = () => {
         .then((res) => res.data)
         .then((data) => {
           setPlatforms(data.platforms.svod);
-          console.log(data.platforms.svod);
         });
 
       await axios
@@ -99,14 +105,20 @@ const Shows = () => {
 
       await axios
         .get(
-          `https://api.betaseries.com/shows/list?key=${process.env.REACT_APP_KEY}&v=3.0&${searchParams}&order=popularity&filter=new`,
+          `https://api.betaseries.com/shows/list?key=${process.env.REACT_APP_KEY}&v=3.0&order=${filterOrder}&filter=${filterFilter}&platforms=${filterPlatform}&starting=${filterInitiale}&country=${filterCountry}`,
           config
         )
         .then((res) => res.data)
         .then((data) => setShowResults(data.shows));
     }
     request();
-  }, [searchParams]);
+  }, [
+    filterOrder,
+    filterFilter,
+    filterPlatform,
+    filterInitiale,
+    filterCountry,
+  ]);
 
   return (
     <div className="shows">
@@ -134,14 +146,18 @@ const Shows = () => {
             {platforms.map((platform) => (
               <p
                 key={platform.id}
-                value={searchParams.get("platforms") || ""}
-                onClick={(e) => {
-                  setSearchParams({
-                    ...toObject(searchParams),
-                    platforms: e.target.value,
-                  });
-                  console.log(e.target.value);
+                onClick={() => {
+                  filterPlatform.includes(platform.id)
+                    ? setFilterPlatform(
+                        filterPlatform.filter((a) => a !== platform.id)
+                      )
+                    : setFilterPlatform((prevState) => {
+                        return [...prevState, platform.id];
+                      });
                 }}
+                className={
+                  filterPlatform.includes(platform.id) ? "filterSelected" : ""
+                }
               >
                 {platform.name}
               </p>
@@ -231,16 +247,16 @@ const Shows = () => {
             )}
           </div>
           <div className={openCountry ? "menu-actif" : "menu"}>
-            <p value="États-Unis">États-Unis</p>
-            <p value="Royaume-Uni">Royaume-Uni</p>
-            <p value="Japon">Japon</p>
-            <p value="Corée du Sud">Corée du Sud</p>
-            <p value="France">France</p>
+            {countries.map((country) => (
+              <p key={country.id} value={country.id}>
+                {country.name}
+              </p>
+            ))}
             <select name="other-country">
               <option value="">Sélectionner un pays</option>
-              {countries.map((country) => (
-                <option key={country} value={country}>
-                  {country}
+              {otherCountries.map((country) => (
+                <option key={country.id} value={country.id}>
+                  {country.name}
                 </option>
               ))}
             </select>
@@ -302,7 +318,16 @@ const Shows = () => {
           </div>
           <div className={openInitiales ? "initiales-actif" : "menu"}>
             {initiales.map((initiale) => (
-              <p key={initiale} value={initiale}>
+              <p
+                key={initiale}
+                value={initiale}
+                onClick={() => {
+                  filterInitiale === initiale
+                    ? setFilterInitiale("")
+                    : setFilterInitiale(initiale);
+                }}
+                className={filterInitiale === initiale ? "filterSelected" : ""}
+              >
                 {initiale}
               </p>
             ))}

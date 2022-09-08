@@ -9,14 +9,14 @@
     display: flex;
     background-color: #fafafa;
     width: 49%;
-    height: 174px;
+    height: 184px;
     margin-bottom: 10px;
     overflow: hidden;
     margin-right: 3px;
 
     img {
-      width: 119px;
-      height: 174px;
+      width: 120px;
+      height: 194px;
     }
 
     .mediaBody {
@@ -33,6 +33,18 @@
         font-weight: 400;
         line-height: 16px;
         color: #6c757d;
+      }
+
+      .platformsContainer {
+        p {
+          display: inline;
+          padding-right: 5px;
+          text-align: justify;
+        }
+      }
+
+      .platformsEpisodes {
+        display: inline;
       }
 
       .flexContainer {

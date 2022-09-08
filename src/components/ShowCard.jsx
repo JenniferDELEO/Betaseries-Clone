@@ -16,21 +16,32 @@ const ShowCard = ({ show }) => {
         {Object.values(show.genres)
           ? Object.values(show.genres).slice(0, 4).join(", ")
           : ""}
-        {show.platforms && show.platforms.svods ? (
-          show.platforms.svods.map((platform) => (
-            <p key={platform.id}>
-              Plateforme : {platform.name} - {show.episodes} épisodes
-            </p>
-          ))
-        ) : show.platforms && show.platforms.forced ? (
-          show.platforms.forced.map((platform) => (
-            <p key={platform.id}>
-              Plateforme : {platform.name} - {show.episodes} épisodes
-            </p>
-          ))
-        ) : (
-          <p>{show.episodes} épisodes</p>
-        )}
+        <div className="platformsEpisodes">
+          {show.platforms && show.platforms.svods ? (
+            <div className="platformsContainer">
+              Plateforme :{" "}
+              {show.platforms.svods.map((platform) => (
+                <p key={platform.id}>{platform.name}</p>
+              ))}
+            </div>
+          ) : show.platforms && show.platforms.forced ? (
+            <div className="platformsContainer">
+              Plateforme :{" "}
+              {show.platforms.forced.map((platform) => (
+                <p key={platform.id}>{platform.name}</p>
+              ))}
+            </div>
+          ) : (
+            <p>{show.episodes} épisodes</p>
+          )}
+          {(show.platforms && show.platforms.svods) ||
+          (show.platforms && show.platforms.forced) ? (
+            <span>{show.episodes} épisodes</span>
+          ) : (
+            ""
+          )}
+        </div>
+
         <p>
           Statut :{" "}
           {show.status === "Ended"
