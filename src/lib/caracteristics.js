@@ -294,7 +294,6 @@ export const durations = [
 ];
 
 export const initiales = [
-  "0-9",
   "A",
   "B",
   "C",

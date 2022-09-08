@@ -105,7 +105,7 @@ const Shows = () => {
 
       await axios
         .get(
-          `https://api.betaseries.com/shows/list?key=${process.env.REACT_APP_KEY}&v=3.0&order=${filterOrder}&filter=${filterFilter}&platforms=${filterPlatform}&starting=${filterInitiale}&country=${filterCountry}`,
+          `https://api.betaseries.com/shows/list?key=${process.env.REACT_APP_KEY}&v=3.0&order=${filterOrder}&filter=${filterFilter}&platforms=${filterPlatform}&starting=${filterInitiale}`,
           config
         )
         .then((res) => res.data)
