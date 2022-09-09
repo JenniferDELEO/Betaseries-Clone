@@ -4,7 +4,11 @@ const ShowCard = ({ show }) => {
   return (
     <div className="resultContainer">
       <img
-        src={show.images.poster ? show.images.poster : "images/pas-dimage.webp"}
+        src={
+          show.images && show.images.poster
+            ? show.images.poster
+            : "images/pas-dimage.webp"
+        }
         alt="poster série"
       />
       <div className="mediaBody">

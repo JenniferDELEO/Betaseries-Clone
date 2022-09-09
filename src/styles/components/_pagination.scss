@@ -1,0 +1,46 @@
+.paginationShows {
+  text-align: left;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  line-height: 1.2;
+
+  .paginationJs {
+    .paginationPages {
+      nav {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .pageCount {
+          border-right: 1px solid #f2f3f6;
+          border-radius: 0 3px 3px 0;
+          background-color: #ffffff;
+
+          &:first-child {
+            border-radius: 3px 0 0 3px;
+          }
+
+          .page {
+            margin: 8px;
+            font-weight: 200;
+            padding: 0 4px !important;
+            min-width: 80px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+          }
+
+          .pageActive {
+            height: 30px;
+            line-height: 30px;
+            background: #3b8dd0 !important;
+            color: #ffffff !important;
+          }
+        }
+      }
+    }
+  }
+}
