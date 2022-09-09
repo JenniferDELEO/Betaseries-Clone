@@ -19,9 +19,13 @@ import {
 import { MdTimer } from "react-icons/md";
 import { FiSliders, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { IoMdArrowDropdown } from "react-icons/io";
+import Pagination from "../components/Pagination";
 
 const Shows = () => {
-  const [showResults, setShowResults] = useState([]);
+  const [showList, setShowList] = useState([]);
+  const [showResult, setShowResult] = useState([]);
+  const [showsNumber, setShowsNumber] = useState(null);
+  const [showsId, setShowsId] = useState([]);
   const [platforms, setPlatforms] = useState([]);
   const [genres, setGenres] = useState({});
   const [openPlatform, setOpenPlatform] = useState(false);
@@ -33,15 +37,18 @@ const Shows = () => {
   const [openNew, setOpenNew] = useState(false);
   const [openInitiales, setOpenInitiales] = useState(false);
   const [openSaveFilter, setOpenSaveFilter] = useState(false);
-  const [filterPlatform, setFilterPlatform] = useState([]);
-  const [filterOrder, setFilterOrder] = useState("popularity");
-  const [filterFilter, setFilterFilter] = useState("new");
+  const [text, setText] = useState("");
+  const limit = 20;
+  const [currentPage, setCurrentPage] = useState(1);
   const [filterGenre, setFilterGenre] = useState([]);
   const [filterDiffusion, setFilterDiffusion] = useState([]);
+  const [filterEpisodeDuration, setFilterEpisodeDuration] = useState([]);
+  const [filterPlatform, setFilterPlatform] = useState([]);
   const [filterCreationDate, setFilterCreationDate] = useState([]);
   const [filterCountry, setFilterCountry] = useState([]);
-  const [filterEpisodeDuration, setFilterEpisodeDuration] = useState([]);
   const [filterInitiale, setFilterInitiale] = useState("");
+  const [filterOrder, setFilterOrder] = useState("popularity");
+  const [filterFilter, setFilterFilter] = useState("new");
 
   const openingPlatform = () => {
     setOpenPlatform(!openPlatform);
@@ -105,20 +112,47 @@ const Shows = () => {
 
       await axios
         .get(
-          `https://api.betaseries.com/shows/list?key=${process.env.REACT_APP_KEY}&v=3.0&order=${filterOrder}&filter=${filterFilter}&platforms=${filterPlatform}&starting=${filterInitiale}`,
+          `https://api.betaseries.com/search/shows?key=${
+            process.env.REACT_APP_KEY
+          }&v=3.0&text=${text}&limit=${limit}&offset=${
+            (currentPage - 1) * limit
+          }&genres=${filterGenre}&diffusions=${filterDiffusion}&duration=${filterEpisodeDuration}&svods=${filterPlatform}&creations=${filterCreationDate}&pays=${filterCountry}&debut=${filterInitiale}&tri=${filterOrder}&autres=${filterFilter}`,
           config
         )
         .then((res) => res.data)
-        .then((data) => setShowResults(data.shows));
+        .then((data) => {
+          setShowList(data.shows);
+          setShowsNumber(data.total);
+        });
     }
     request();
   }, [
+    text,
+    limit,
+    currentPage,
+    filterGenre,
+    filterDiffusion,
+    filterEpisodeDuration,
+    filterPlatform,
+    filterCreationDate,
+    filterCountry,
+    filterInitiale,
     filterOrder,
     filterFilter,
-    filterPlatform,
-    filterInitiale,
-    filterCountry,
   ]);
+
+  useEffect(() => {
+    const idList = [];
+    showList.map((show) => idList.push(show.id));
+    setShowsId(idList.join(","));
+
+    axios
+      .get(
+        `https://api.betaseries.com/shows/display?key=${process.env.REACT_APP_KEY}&v=3.0&id=${showsId}`
+      )
+      .then((res) => res.data)
+      .then((data) => setShowResult(data.shows));
+  }, [showList, showsId]);
 
   return (
     <div className="shows">
@@ -297,8 +331,28 @@ const Shows = () => {
             {openNew ? <FiChevronUp size={20} /> : <FiChevronDown size={20} />}
           </div>
           <div className={openNew ? "menu-actif" : "menu"}>
-            <p>Uniquement les séries que je ne suis pas</p>
-            <p>Uniquement les séries que je suis</p>
+            <p
+              value="new"
+              onClick={() => {
+                filterFilter === "new"
+                  ? setFilterFilter()
+                  : setFilterFilter("new");
+              }}
+              className={filterFilter === "new" ? "filterSelected" : ""}
+            >
+              Uniquement les séries que je ne suis pas
+            </p>
+            <p
+              value=""
+              onClick={() => {
+                filterFilter === ""
+                  ? setFilterFilter("new")
+                  : setFilterFilter();
+              }}
+              className={filterFilter === "new" ? "filterSelected" : ""}
+            >
+              Uniquement les séries que je suis
+            </p>
           </div>
         </div>
         <div className="selectContainer">
@@ -374,10 +428,17 @@ const Shows = () => {
           </p>
         </div>
         <div className="showCard">
-          {showResults.map((show) => (
+          {showResult.map((show) => (
             <ShowCard show={show} key={show.id} />
           ))}
         </div>
+      </div>
+      <div className="">
+        <Pagination
+          index={Math.ceil(showsNumber / limit)}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );

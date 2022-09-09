@@ -4,17 +4,10 @@ export default function Pagination({ index, setCurrentPage, currentPage }) {
 
   function pageCountComponent(page, i) {
     return (
-      <div
-        key={i}
-        className={
-          page === currentPage
-            ? "bg-main_bg_color rounded text-main_color"
-            : null
-        }
-      >
+      <div key={i} className={page === currentPage ? "" : null}>
         <a
           key={page}
-          className="m-2"
+          className=""
           onClick={() => {
             setCurrentPage(page);
           }}
@@ -26,19 +19,22 @@ export default function Pagination({ index, setCurrentPage, currentPage }) {
   }
 
   return (
-    <nav className="bg-white h-16 flex justify-center items-center text-lg cursor-pointer w-[300px] mt-3 mb-2">
-      <span
-        onClick={() => setCurrentPage(1)}
-        className="text-3xl rounded hover:bg-main_bg_color"
-      >
-        «
-      </span>
-      <span
-        className="text-3xl m-3 rounded hover:bg-main_bg_color"
-        onClick={currentPage > 1 ? () => setCurrentPage(currentPage - 1) : null}
-      >
-        ‹
-      </span>
+    <nav className="">
+      {currentPage > 3 && (
+        <span onClick={() => setCurrentPage(1)} className="">
+          1
+        </span>
+      )}
+      {currentPage > 1 && (
+        <span
+          className=""
+          onClick={
+            currentPage > 1 ? () => setCurrentPage(currentPage - 1) : null
+          }
+        >
+          ‹‹
+        </span>
+      )}
       {index < 5
         ? pages.map((page, i) => {
             return pageCountComponent(page, i);
@@ -55,19 +51,16 @@ export default function Pagination({ index, setCurrentPage, currentPage }) {
             return pageCountComponent(page, i);
           })}
       {index > 5 && currentPage < index - 2 ? <span>...</span> : null}
+      <span onClick={() => setCurrentPage(index)} className="">
+        {index}
+      </span>
       <span
-        className="text-3xl  m-3 rounded hover:bg-main_bg_color"
+        className=""
         onClick={
           currentPage < index ? () => setCurrentPage(currentPage + 1) : null
         }
       >
-        ›
-      </span>
-      <span
-        onClick={() => setCurrentPage(index)}
-        className="text-3xl rounded hover:bg-main_bg_color"
-      >
-        »
+        ››
       </span>
     </nav>
   );
