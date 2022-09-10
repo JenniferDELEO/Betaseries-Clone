@@ -15,27 +15,26 @@
         align-items: center;
 
         .pageCount {
-          border-right: 1px solid #f2f3f6;
-          border-radius: 0 3px 3px 0;
-          background-color: #ffffff;
-
-          &:first-child {
-            border-radius: 3px 0 0 3px;
-          }
-
           .page {
-            margin: 8px;
             font-weight: 200;
-            padding: 0 4px !important;
-            min-width: 80px;
+            padding: 1px 4px !important;
+            min-width: 30px;
             text-decoration: none;
             text-align: center;
             cursor: pointer;
+            height: 30px;
+            line-height: 30px;
+            background-color: #ffffff;
+            display: block;
+            border-radius: 0 3px 3px 0;
+            border: 1px solid #f2f3f6;
+
+            &:first-child {
+              border-radius: 3px 0 0 3px;
+            }
           }
 
           .pageActive {
-            height: 30px;
-            line-height: 30px;
             background: #3b8dd0 !important;
             color: #ffffff !important;
           }

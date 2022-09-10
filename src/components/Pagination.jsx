@@ -24,19 +24,23 @@ export default function Pagination({ index, setCurrentPage, currentPage }) {
       <div className="paginationPages">
         <nav>
           {currentPage > 3 && (
-            <span onClick={() => setCurrentPage(1)} className="">
-              1
-            </span>
+            <div className="pageCount">
+              <span onClick={() => setCurrentPage(1)} className="page">
+                1
+              </span>
+            </div>
           )}
           {currentPage > 1 && (
-            <span
-              className=""
-              onClick={
-                currentPage > 1 ? () => setCurrentPage(currentPage - 1) : null
-              }
-            >
-              ‹‹
-            </span>
+            <div className="pageCount">
+              <span
+                className="page"
+                onClick={
+                  currentPage > 1 ? () => setCurrentPage(currentPage - 1) : null
+                }
+              >
+                ‹‹
+              </span>
+            </div>
           )}
           {index < 5
             ? pages.map((page, i) => {
@@ -54,21 +58,29 @@ export default function Pagination({ index, setCurrentPage, currentPage }) {
                 return pageCountComponent(page, i);
               })}
           {index > 5 && currentPage < index - 2 ? (
-            <span className="pageCount">...</span>
+            <div className="pageCount">
+              <span className="page">...</span>
+            </div>
           ) : null}
           {currentPage !== index && (
-            <span onClick={() => setCurrentPage(index)} className="pageCount">
-              {index}
-            </span>
+            <div className="pageCount">
+              <span onClick={() => setCurrentPage(index)} className="page">
+                {index}
+              </span>
+            </div>
           )}
-          <span
-            className="pageCount"
-            onClick={
-              currentPage < index ? () => setCurrentPage(currentPage + 1) : null
-            }
-          >
-            ››
-          </span>
+          <div className="pageCount">
+            <span
+              className="page"
+              onClick={
+                currentPage < index
+                  ? () => setCurrentPage(currentPage + 1)
+                  : null
+              }
+            >
+              ››
+            </span>
+          </div>
         </nav>
       </div>
     </div>

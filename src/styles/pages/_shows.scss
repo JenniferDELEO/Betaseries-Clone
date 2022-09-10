@@ -51,18 +51,39 @@
         justify-content: flex-start;
         align-items: center;
         height: 40px;
+        border: 0.2px solid transparent;
+        background-color: transparent;
         cursor: pointer;
+        font-size: 12px;
+
+        span {
+          width: 100%;
+        }
       }
 
       .selectTitle {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-end;
         height: 40px;
         cursor: pointer;
         font-weight: 500;
         color: black;
         font-size: 12px;
+
+        .filterNumber {
+          background-color: #3b8dd0;
+          color: #ffffff;
+          margin-right: 3px;
+          padding: 4px 8px;
+          border-radius: 10px;
+          font-size: 10px;
+        }
+
+        .filterNumberOpen {
+          background-color: #ffffff;
+          color: #3b8dd0;
+        }
       }
 
       svg {
@@ -90,7 +111,7 @@
         visibility: visible;
         padding: 5px 0;
 
-        p {
+        button {
           text-decoration: none;
           text-align: center;
           border: 0.2px solid rgba(128, 128, 128, 0.338);
@@ -166,6 +187,7 @@
           background: #fafafa;
           font-size: 14px;
           padding: 0;
+          text-align: center;
 
           &:hover {
             border: none;
@@ -194,7 +216,7 @@
         flex-wrap: wrap;
         justify-content: center;
 
-        p {
+        button {
           text-decoration: none;
           padding: 5px;
           text-align: center;
@@ -259,6 +281,61 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+      }
+
+      .sortingButton {
+        position: relative;
+
+        .currentTri {
+          text-transform: none;
+          font-size: 12px;
+          font-weight: 700;
+          line-height: 16px;
+          width: 100%;
+          white-space: nowrap;
+          cursor: pointer;
+        }
+
+        .toggleTri {
+          width: auto;
+          right: -12px;
+          position: absolute;
+          top: -5px;
+          left: unset;
+          margin: 5px;
+          display: none;
+          z-index: 100;
+          border: 1px solid #fff;
+          border-radius: 2px;
+          background: #fff;
+          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.16));
+
+          button {
+            cursor: pointer;
+            display: block;
+            text-transform: none;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 16px;
+            white-space: nowrap;
+            color: #000;
+            transition: color 0.2s ease;
+            text-decoration: none;
+            border: 0;
+            background: 0;
+            background-clip: padding-box;
+            font-family: inherit;
+            padding: 8px 15px;
+          }
+        }
+
+        .toggleTriActive {
+          display: block;
+
+          button:hover {
+            color: $color-2;
+          }
+        }
       }
     }
   }

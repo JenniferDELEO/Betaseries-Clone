@@ -17,9 +17,14 @@ const ShowCard = ({ show }) => {
             ? show.title.slice(0, 20) + "..."
             : show.title}
         </h2>
-        {Object.values(show.genres)
-          ? Object.values(show.genres).slice(0, 4).join(", ")
-          : ""}
+        {Object.values(show.genres) && Object.values(show.genres).length > 4 ? (
+          <p>{Object.values(show.genres).slice(0, 4).join(", ")}...</p>
+        ) : Object.values(show.genres) &&
+          Object.values(show.genres).length <= 4 ? (
+          <p>{Object.values(show.genres).join(", ")}</p>
+        ) : (
+          ""
+        )}
         <div className="platformsEpisodes">
           {show.platforms && show.platforms.svods ? (
             <div className="platformsContainer">

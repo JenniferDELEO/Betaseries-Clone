@@ -285,12 +285,30 @@ export const otherCountries = [
 ];
 
 export const durations = [
-  "- 20 min",
-  "20-30 min",
-  "30-40 min",
-  "40-50 min",
-  "50-60 min",
-  "+ 60 min",
+  {
+    id: "1-19",
+    name: "- 20 min",
+  },
+  {
+    id: "20-30",
+    name: "20-30 min",
+  },
+  {
+    id: "31-40",
+    name: "30-40 min",
+  },
+  {
+    id: "41-50",
+    name: "40-50 min",
+  },
+  {
+    id: "51-60",
+    name: "50-60 min",
+  },
+  {
+    id: "61",
+    name: "+ 60 min",
+  },
 ];
 
 export const initiales = [
