@@ -9,6 +9,7 @@ import Planning from "../pages/Planning";
 import Shows from "../pages/Shows";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
+import ShowDetail from "../pages/ShowDetail";
 
 const Main = () => {
   return (
@@ -19,6 +20,7 @@ const Main = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/shows" element={<Shows />} />
         <Route path="/my-shows" element={<MyShows />} />
+        <Route path="/show/:id" element={<ShowDetail />} />
         <Route path="/episodes" element={<Episodes />} />
         <Route path="/planning" element={<Planning />} />
         <Route path="/movies" element={<Movies />} />

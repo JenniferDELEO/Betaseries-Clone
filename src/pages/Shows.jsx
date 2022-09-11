@@ -9,17 +9,12 @@ import {
 } from "../lib/caracteristics";
 import { BiCaretRightSquare, BiRotateLeft } from "react-icons/bi";
 import { FaTheaterMasks, FaSearch } from "react-icons/fa";
-import {
-  BsCalendarCheck,
-  BsClock,
-  BsFlag,
-  BsCursorText,
-  BsBookmark,
-} from "react-icons/bs";
+import { BsCalendarCheck, BsClock, BsFlag, BsCursorText } from "react-icons/bs";
 import { MdTimer } from "react-icons/md";
 import { FiSliders, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import Pagination from "../components/Pagination";
+import { Link } from "react-router-dom";
 
 const Shows = () => {
   const [showList, setShowList] = useState([]);
@@ -37,7 +32,6 @@ const Shows = () => {
   const [openDurationEpisode, setOpenDurationEpisode] = useState(false);
   const [openNew, setOpenNew] = useState(false);
   const [openInitiales, setOpenInitiales] = useState(false);
-  const [openSaveFilter, setOpenSaveFilter] = useState(false);
   const [openOrderFilter, setOpenOrderFilter] = useState(false);
   const [text, setText] = useState("");
   const limit = 20;
@@ -82,10 +76,6 @@ const Shows = () => {
 
   const openingInitiales = () => {
     setOpenInitiales(!openInitiales);
-  };
-
-  const openingSaveFilter = () => {
-    setOpenSaveFilter(!openSaveFilter);
   };
 
   const openingOrderFilter = () => {
@@ -869,9 +859,15 @@ const Shows = () => {
           </div>
           <div className="showCard">
             {showResult.length > 0 &&
-              showResult.map((show) => <ShowCard show={show} key={show.id} />)}
+              showResult.map((show) => (
+                <Link to={`/show/${show.id}`}>
+                  <ShowCard show={show} key={show.id} />
+                </Link>
+              ))}
             {showResultOneOnly.length > 0 && (
-              <ShowCard show={showResultOneOnly} />
+              <Link to={`/show/${showResultOneOnly.id}`}>
+                <ShowCard show={showResultOneOnly} />
+              </Link>
             )}
           </div>
           <div className="paginationShows">
