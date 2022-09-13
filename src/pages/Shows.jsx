@@ -90,36 +90,40 @@ const Shows = () => {
       },
     };
     async function request() {
-      await axios
-        .get(
-          `https://api.betaseries.com/platforms/list?key=${process.env.REACT_APP_KEY}&v=3.0`
-        )
-        .then((res) => res.data)
-        .then((data) => {
-          setPlatforms(data.platforms.svod);
-        });
+      try {
+        await axios
+          .get(
+            `https://api.betaseries.com/platforms/list?key=${process.env.REACT_APP_KEY}&v=3.0`
+          )
+          .then((res) => res.data)
+          .then((data) => {
+            setPlatforms(data.platforms.svod);
+          });
 
-      await axios
-        .get(
-          `https://api.betaseries.com/shows/genres?key=${process.env.REACT_APP_KEY}&v=3.0`
-        )
-        .then((res) => res.data)
-        .then((data) => setGenres(data.genres));
+        await axios
+          .get(
+            `https://api.betaseries.com/shows/genres?key=${process.env.REACT_APP_KEY}&v=3.0`
+          )
+          .then((res) => res.data)
+          .then((data) => setGenres(data.genres));
 
-      await axios
-        .get(
-          `https://api.betaseries.com/search/shows?key=${
-            process.env.REACT_APP_KEY
-          }&v=3.0&text=${text}&limit=${limit}&offset=${
-            currentPage - 1
-          }&genres=${filterGenre}&diffusions=${filterDiffusion}&duration=${filterEpisodeDuration}&svods=${filterPlatform}&creations=${filterCreationDate}&pays=${filterCountry}&debut=${filterInitiale}&tri=${filterOrder}&autres=${filterFilter}`,
-          config
-        )
-        .then((res) => res.data)
-        .then((data) => {
-          setShowList(data.shows);
-          setShowsNumber(data.total);
-        });
+        await axios
+          .get(
+            `https://api.betaseries.com/search/shows?key=${
+              process.env.REACT_APP_KEY
+            }&v=3.0&text=${text}&limit=${limit}&offset=${
+              currentPage - 1
+            }&genres=${filterGenre}&diffusions=${filterDiffusion}&duration=${filterEpisodeDuration}&svods=${filterPlatform}&creations=${filterCreationDate}&pays=${filterCountry}&debut=${filterInitiale}&tri=${filterOrder}&autres=${filterFilter}`,
+            config
+          )
+          .then((res) => res.data)
+          .then((data) => {
+            setShowList(data.shows);
+            setShowsNumber(data.total);
+          });
+      } catch (err) {
+        console.log("error", err);
+      }
     }
     request();
   }, [
@@ -139,22 +143,26 @@ const Shows = () => {
 
   useEffect(() => {
     async function request() {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      const idList = [];
-      showList.map((show) => idList.push(show.id));
-      setShowsId(idList.join(","));
+      try {
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
+        const idList = [];
+        showList.map((show) => idList.push(show.id));
+        setShowsId(idList.join(","));
 
-      showsId.length !== 0 &&
-        (await axios
-          .get(
-            `https://api.betaseries.com/shows/display?key=${process.env.REACT_APP_KEY}&v=3.0&id=${showsId}`
-          )
-          .then((res) => res.data)
-          .then((data) =>
-            idList.length > 1
-              ? setShowResult(data.shows)
-              : setShowResultOneOnly(data.show)
-          ));
+        showsId.length !== 0 &&
+          (await axios
+            .get(
+              `https://api.betaseries.com/shows/display?key=${process.env.REACT_APP_KEY}&v=3.0&id=${showsId}`
+            )
+            .then((res) => res.data)
+            .then((data) =>
+              idList.length > 1
+                ? setShowResult(data.shows)
+                : setShowResultOneOnly(data.show)
+            ));
+      } catch (err) {
+        console.log("error", err);
+      }
     }
     request();
   }, [showList, showsId]);
