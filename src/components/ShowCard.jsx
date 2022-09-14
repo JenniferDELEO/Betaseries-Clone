@@ -1,4 +1,5 @@
 import React from "react";
+import RatingStar from "./RatingStar";
 
 const ShowCard = ({ show }) => {
   return (
@@ -61,9 +62,7 @@ const ShowCard = ({ show }) => {
         </p>
         <div className="flexContainer">
           <p>{show.creation}</p>
-          <p>
-            {show.notes.mean.toFixed(1)}/5 <span>⭐</span>
-          </p>
+          <RatingStar rate={parseInt(show.notes.mean)} key={show.id} />
         </div>
         <p className="description">
           {show.description.split(" ").slice(0, 20).join(" ")}...

@@ -144,6 +144,7 @@ const Shows = () => {
   useEffect(() => {
     async function request() {
       try {
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const idList = [];
         showList.map((show) => idList.push(show.id));
         setShowsId(idList.join(","));
