@@ -144,7 +144,6 @@ const Shows = () => {
   useEffect(() => {
     async function request() {
       try {
-        // await new Promise((resolve) => setTimeout(resolve, 1000));
         const idList = [];
         showList.map((show) => idList.push(show.id));
         setShowsId(idList.join(","));
@@ -868,12 +867,14 @@ const Shows = () => {
           <div className="showCard">
             {showResult.length > 0 &&
               showResult.map((show) => (
-                <Link to={`/show/${show.id}`}>
-                  <ShowCard show={show} key={show.id} />
+                <Link to={`/show/${show.slug}/${show.id}`} key={show.id}>
+                  <ShowCard show={show} />
                 </Link>
               ))}
             {showResultOneOnly.length > 0 && (
-              <Link to={`/show/${showResultOneOnly.id}`}>
+              <Link
+                to={`/show/${showResultOneOnly.slug}/${showResultOneOnly.id}`}
+              >
                 <ShowCard show={showResultOneOnly} />
               </Link>
             )}

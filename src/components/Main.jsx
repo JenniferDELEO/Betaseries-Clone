@@ -20,7 +20,7 @@ const Main = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/shows" element={<Shows />} />
         <Route path="/my-shows" element={<MyShows />} />
-        <Route path="/show/:id" element={<ShowDetail />} />
+        <Route path="/show/:name/:id" element={<ShowDetail />} />
         <Route path="/episodes" element={<Episodes />} />
         <Route path="/planning" element={<Planning />} />
         <Route path="/movies" element={<Movies />} />
