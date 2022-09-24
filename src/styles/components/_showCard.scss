@@ -3,6 +3,29 @@
   flex-wrap: wrap;
   justify-content: space-between;
 
+  .erreur {
+    width: 100%;
+    margin: 20px auto 10px;
+    padding: 10px;
+    max-width: 400px;
+    border: 1px solid #eeeeee;
+    border-radius: 4px;
+    text-align: center;
+    background: #fafafa;
+
+    p {
+      margin: 10px;
+      font-style: italic;
+    }
+  }
+
+  .loading {
+    width: 100%;
+    margin: 20px auto 10px;
+    padding: 10px;
+    max-width: 400px;
+  }
+
   a {
     margin-left: 3px;
     cursor: pointer;

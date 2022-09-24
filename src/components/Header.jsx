@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { MdComputer } from "react-icons/md";
 import { IoMdFilm, IoMdClose } from "react-icons/io";
@@ -11,6 +11,7 @@ import SearchMovies from "./SearchMovies";
 
 const Header = () => {
   let navigate = useNavigate();
+  const location = useLocation();
   const [search, setSearch] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [searchResultShow, setSearchResultShow] = useState([]);
@@ -60,6 +61,7 @@ const Header = () => {
   };
 
   useEffect(() => {
+    console.log(location);
     axios
       .get(
         `https://api.betaseries.com/shows/search?key=${process.env.REACT_APP_KEY}&v=3.0&title=${searchInput}&nbpp=${nbpp}`,
@@ -75,7 +77,7 @@ const Header = () => {
       )
       .then((res) => res.data)
       .then((data) => setSearchResultMovie(data.movies));
-  }, [searchInput, nbpp]);
+  }, [searchInput, nbpp, location]);
 
   const handleLogOut = () => {
     localStorage.setItem("token", "");
@@ -83,7 +85,7 @@ const Header = () => {
   };
 
   async function handleFocusOnSearch() {
-    await setSearch(!search);
+    setSearch(!search);
     ref.current.focus();
     blockScroll();
   }
@@ -96,7 +98,13 @@ const Header = () => {
 
   return (
     <div className="header">
-      <nav>
+      <nav
+        className={
+          location.pathname.includes("show/")
+            ? "navShowContainer navContainer"
+            : "navContainer"
+        }
+      >
         {token ? (
           search ? (
             <div className="searchContainer">

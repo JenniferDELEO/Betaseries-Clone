@@ -15,6 +15,7 @@ import { FiSliders, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import Pagination from "../components/Pagination";
 import { Link } from "react-router-dom";
+import Loading from "../components/Loading";
 
 const Shows = () => {
   const [showList, setShowList] = useState([]);
@@ -45,6 +46,7 @@ const Shows = () => {
   const [filterInitiale, setFilterInitiale] = useState("");
   const [filterOrder, setFilterOrder] = useState("popularite");
   const [filterFilter, setFilterFilter] = useState(["new"]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const openingPlatform = () => {
     setOpenPlatform(!openPlatform);
@@ -89,7 +91,7 @@ const Shows = () => {
         Authorization: "Bearer " + token,
       },
     };
-    async function request() {
+    const platformsGenres = async () => {
       try {
         await axios
           .get(
@@ -106,7 +108,13 @@ const Shows = () => {
           )
           .then((res) => res.data)
           .then((data) => setGenres(data.genres));
+      } catch (err) {
+        console.log("error", err);
+      }
+    };
 
+    const showsList = async () => {
+      try {
         await axios
           .get(
             `https://api.betaseries.com/search/shows?key=${
@@ -124,8 +132,10 @@ const Shows = () => {
       } catch (err) {
         console.log("error", err);
       }
-    }
-    request();
+    };
+
+    platformsGenres();
+    showsList();
   }, [
     text,
     limit,
@@ -142,29 +152,38 @@ const Shows = () => {
   ]);
 
   useEffect(() => {
-    async function request() {
+    setIsLoading(true);
+    async function showsResult() {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 200));
         const idList = [];
         showList.map((show) => idList.push(show.id));
         setShowsId(idList.join(","));
 
-        showsId.length !== 0 &&
-          (await axios
+        if (idList.length !== 0) {
+          await axios
             .get(
               `https://api.betaseries.com/shows/display?key=${process.env.REACT_APP_KEY}&v=3.0&id=${showsId}`
             )
             .then((res) => res.data)
-            .then((data) =>
-              idList.length > 1
-                ? setShowResult(data.shows)
-                : setShowResultOneOnly(data.show)
-            ));
+            .then((data) => {
+              if (idList.length > 1) {
+                setIsLoading(false);
+                setShowResult(data.shows);
+              } else {
+                setIsLoading(false);
+                setShowResultOneOnly(data.show);
+              }
+            });
+        } else {
+          setShowResult([]);
+          setIsLoading(false);
+        }
       } catch (err) {
         console.log("error", err);
       }
     }
-    request();
+    showsResult();
   }, [showList, showsId]);
 
   const promptFunction = () => {
@@ -251,7 +270,7 @@ const Shows = () => {
                     filterPlatform.includes(platform.id)
                       ? setFilterPlatform(
                           filterPlatform.filter((a) => a !== platform.id)
-                        ) && setCurrentPage(1)
+                        )
                       : setFilterPlatform((prevState) => {
                           return [...prevState, platform.id];
                         });
@@ -767,7 +786,10 @@ const Shows = () => {
         </div>
         <div className="listShows">
           <div className="mainTitle">
-            <h1>Annuaire des séries ({showsNumber})</h1>
+            <h1>
+              Annuaire des séries{" "}
+              {showResult.length > 0 ? `(${showsNumber})` : ""}
+            </h1>
             <div className="sortingButton">
               <span className="currentTri" onClick={openingOrderFilter}>
                 {filterOrder === "popularite"
@@ -866,6 +888,16 @@ const Shows = () => {
             </div>
           </div>
           <div className="showCard">
+            {!isLoading && showResult.length === 0 && (
+              <div className="erreur">
+                <p>Aucun résultat correspondant à la recherche.</p>
+              </div>
+            )}
+            {isLoading && showResult.length === 0 && (
+              <div className="loading">
+                <Loading />
+              </div>
+            )}
             {showResult.length > 0 &&
               showResult.map((show) => (
                 <Link to={`/show/${show.slug}/${show.id}`} key={show.id}>

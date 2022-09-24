@@ -1,5 +1,5 @@
 .header {
-  nav {
+  .navContainer {
     background-color: $color-2;
     color: $white;
     height: 70px;
@@ -167,6 +167,70 @@
 
         .searchIcon {
           color: $color-3;
+          padding-top: 10px;
+        }
+      }
+    }
+  }
+
+  .navShowContainer {
+    background-color: transparent;
+    color: rgb(83, 83, 83);
+
+    .searchContainer {
+      .title {
+        a {
+          text-decoration: none;
+          color: rgb(83, 83, 83);
+        }
+      }
+
+      .searchSection {
+        .searchInput {
+          color: rgb(83, 83, 83);
+          &::placeholder {
+            color: rgb(83, 83, 83);
+          }
+
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+
+    .navbar {
+      ul {
+        a {
+          color: rgb(83, 83, 83);
+        }
+        a.nav {
+          color: rgb(83, 83, 83);
+          &:hover {
+            color: rgb(83, 83, 83);
+          }
+
+          p {
+            color: rgb(83, 83, 83);
+          }
+        }
+        a.nav-active {
+          color: $white;
+        }
+      }
+      .connection {
+        display: flex;
+        align-items: center;
+
+        a {
+          text-decoration: none;
+          color: rgb(83, 83, 83);
+          padding-right: 25px;
+          font-size: 15px;
+        }
+
+        .searchIcon {
+          color: rgb(83, 83, 83);
           padding-top: 10px;
         }
       }
