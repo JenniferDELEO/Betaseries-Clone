@@ -1,19 +1,15 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Movies from "./pages/Movies";
-import Shows from "./pages/Shows";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Main from "./components/Main";
+import TokenContextProvider from "./context/tokenContext";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shows" element={<Shows />} />
-        <Route path="/movies" element={<Movies />} />
-        <Route path="*" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
+    <TokenContextProvider>
+      <Header />
+      <Main />
+      <Footer />
+    </TokenContextProvider>
   );
 };
 
