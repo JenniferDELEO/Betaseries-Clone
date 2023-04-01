@@ -14,14 +14,13 @@ const ShowCard = ({ show }) => {
       />
       <div className="mediaBody">
         <h2>
-          {show.title.length > 20
-            ? show.title.slice(0, 20) + "..."
-            : show.title}
+          {show.original_title.length > 20
+            ? show.original_title.slice(0, 20) + "..."
+            : show.original_title}
         </h2>
-        {Object.values(show.genres) && Object.values(show.genres).length > 4 ? (
+        {show.genres && Object.values(show.genres).length > 4 ? (
           <p>{Object.values(show.genres).slice(0, 4).join(", ")}...</p>
-        ) : Object.values(show.genres) &&
-          Object.values(show.genres).length <= 4 ? (
+        ) : show.genres && Object.values(show.genres).length <= 4 ? (
           <p>{Object.values(show.genres).join(", ")}</p>
         ) : (
           ""
@@ -42,7 +41,7 @@ const ShowCard = ({ show }) => {
               ))}
             </div>
           ) : (
-            <p>{show.episodes} épisodes</p>
+            show.episodes > 0 && <p>{show.episodes} épisodes</p>
           )}
           {(show.platforms && show.platforms.svods) ||
           (show.platforms && show.platforms.forced) ? (
@@ -51,22 +50,25 @@ const ShowCard = ({ show }) => {
             ""
           )}
         </div>
-
-        <p>
-          Statut :{" "}
-          {show.status === "Ended"
-            ? "Terminée"
-            : show.status === "Continuing"
-            ? "En cours"
-            : ""}
-        </p>
+        {show.status && (
+          <p>
+            Statut :{" "}
+            {show.status === "Ended"
+              ? "Terminée"
+              : show.status === "Continuing"
+              ? "En cours"
+              : ""}
+          </p>
+        )}
         <div className="flexContainer">
-          <p>{show.creation}</p>
+          {show.creation > 0 && <p>{show.creation}</p>}
           <RatingStar rate={parseInt(show.notes.mean)} key={show.id} />
         </div>
-        <p className="description">
-          {show.description.split(" ").slice(0, 20).join(" ")}...
-        </p>
+        {show.description && (
+          <p className="description">
+            {show.description.split(" ").slice(0, 20).join(" ")}...
+          </p>
+        )}
       </div>
     </div>
   );

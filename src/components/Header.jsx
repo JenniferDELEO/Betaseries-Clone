@@ -8,6 +8,7 @@ import { BiChevronDown } from "react-icons/bi";
 import axios from "axios";
 import SearchShows from "./SearchShows";
 import SearchMovies from "./SearchMovies";
+import betaseriesIcon from "../assets/betaseries.svg";
 
 const Header = () => {
   let navigate = useNavigate();
@@ -61,7 +62,6 @@ const Header = () => {
   };
 
   useEffect(() => {
-    console.log(location);
     axios
       .get(
         `https://api.betaseries.com/shows/search?key=${process.env.REACT_APP_KEY}&v=3.0&title=${searchInput}&nbpp=${nbpp}`,
@@ -110,7 +110,7 @@ const Header = () => {
             <div className="searchContainer">
               <div className="title">
                 <NavLink to="/">
-                  <li>betaseries</li>
+                  <img src={betaseriesIcon} alt="logo betaseries" />
                 </NavLink>
               </div>
               <div className="searchSection">
@@ -141,7 +141,7 @@ const Header = () => {
               <ul>
                 <div className="title">
                   <NavLink to="/">
-                    <li>betaseries</li>
+                    <img src={betaseriesIcon} alt="logo betaseries" />
                   </NavLink>
                 </div>
                 <div className="navbarIntern">
@@ -164,8 +164,10 @@ const Header = () => {
                   <div className="navbar-dropdown">
                     <NavLink
                       to="/shows"
-                      className={(nav) =>
-                        nav.isActive ? `nav nav-active` : "nav"
+                      className={
+                        location.pathname.includes("show")
+                          ? `nav nav-active`
+                          : "nav"
                       }
                     >
                       <li>
@@ -181,25 +183,41 @@ const Header = () => {
                     <div className="dropdown-content">
                       <NavLink
                         to="/shows"
-                        className={(nav) => (nav.isActive ? "navDropdown" : "")}
+                        className={
+                          location.pathname.includes("show")
+                            ? "navDropdown"
+                            : ""
+                        }
                       >
                         Toutes les séries
                       </NavLink>
                       <NavLink
                         to="/my-shows"
-                        className={(nav) => (nav.isActive ? "navDropdown" : "")}
+                        className={
+                          location.pathname.includes("myshow")
+                            ? "navDropdown"
+                            : ""
+                        }
                       >
                         Mes séries
                       </NavLink>
                       <NavLink
                         to="/episodes"
-                        className={(nav) => (nav.isActive ? "navDropdown" : "")}
+                        className={
+                          location.pathname.includes("episodes")
+                            ? "navDropdown"
+                            : ""
+                        }
                       >
                         Episodes à voir
                       </NavLink>
                       <NavLink
                         to="/planning"
-                        className={(nav) => (nav.isActive ? "navDropdown" : "")}
+                        className={
+                          location.pathname.includes("planning")
+                            ? "navDropdown"
+                            : ""
+                        }
                       >
                         Planning des sorties
                       </NavLink>
@@ -208,8 +226,10 @@ const Header = () => {
                   <div className="navbar-dropdown">
                     <NavLink
                       to="/movies"
-                      className={(nav) =>
-                        nav.isActive ? `nav nav-active` : "nav"
+                      className={
+                        location.pathname.includes("movie")
+                          ? `nav nav-active`
+                          : "nav"
                       }
                     >
                       <li>
@@ -225,13 +245,21 @@ const Header = () => {
                     <div className="dropdown-content">
                       <NavLink
                         to="/movies"
-                        className={(nav) => (nav.isActive ? "navDropdown" : "")}
+                        className={
+                          location.pathname.includes("/movies")
+                            ? "navDropdown"
+                            : ""
+                        }
                       >
                         Tous les films
                       </NavLink>
                       <NavLink
                         to="/my-movies"
-                        className={(nav) => (nav.isActive ? "navDropdown" : "")}
+                        className={
+                          location.pathname.includes("my-movies")
+                            ? "navDropdown"
+                            : ""
+                        }
                       >
                         Mes films
                       </NavLink>
@@ -258,7 +286,7 @@ const Header = () => {
           <div className="searchContainer">
             <div className="title">
               <NavLink to="/">
-                <li>betaseries</li>
+                <img src={betaseriesIcon} alt="logo betaseries" />
               </NavLink>
             </div>
             <div className="searchSection">
@@ -289,7 +317,7 @@ const Header = () => {
             <ul>
               <div className="title">
                 <NavLink to="/">
-                  <li>betaseries</li>
+                  <img src={betaseriesIcon} alt="logo betaseries" />
                 </NavLink>
               </div>
               <div className="navbarIntern">

@@ -2,19 +2,20 @@
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  width: 85%;
+  width: 80%;
   margin-top: 20px;
   font-size: 12px;
 
   .searchFilter {
     flex: 1;
     padding: 0 15px;
+    width: 20%;
 
     .searchInput {
       display: flex;
       padding: 0 5px;
       align-items: center;
-      background-color: #ffffff;
+      background-color: #fafafa;
       margin-top: 5px;
       margin-left: 6px;
       width: 100%;
@@ -39,7 +40,7 @@
 
     .selectContainer {
       position: relative;
-      background: #ffffff;
+      background: #fafafa;
       width: 100%;
       border: none;
       text-align: left;
@@ -73,7 +74,7 @@
 
         .filterNumber {
           background-color: #3b8dd0;
-          color: #ffffff;
+          color: #fafafa;
           margin-right: 3px;
           padding: 4px 8px;
           border-radius: 10px;
@@ -81,7 +82,7 @@
         }
 
         .filterNumberOpen {
-          background-color: #ffffff;
+          background-color: #fafafa;
           color: #3b8dd0;
         }
       }
@@ -118,7 +119,7 @@
           border-radius: 5px;
           margin: 10px 10px;
           padding: 5px;
-          background-color: #ffffff;
+          background-color: #fafafa;
           color: gray;
           cursor: pointer;
 
@@ -137,7 +138,7 @@
           border: 0.2px solid rgba(128, 128, 128, 0.338);
           border-radius: 5px;
           margin: 15px;
-          background-color: #ffffff;
+          background-color: #fafafa;
           color: gray;
           cursor: pointer;
         }
@@ -169,7 +170,7 @@
           border: 0.2px solid rgba(128, 128, 128, 0.338);
           border-radius: 5px;
           margin: 15px;
-          background-color: #ffffff;
+          background-color: #fafafa;
           color: gray;
           cursor: pointer;
 
@@ -221,7 +222,7 @@
           text-align: center;
           border: 0.2px solid rgba(128, 128, 128, 0.338);
           border-radius: 5px;
-          background-color: #ffffff;
+          background-color: #fafafa;
           color: gray;
           width: 86px;
           margin: 5px 10px;
@@ -254,7 +255,7 @@
     }
   }
   .listShows {
-    flex: 2.5;
+    flex: 2.8;
 
     .mainTitle {
       padding: 0 7px;

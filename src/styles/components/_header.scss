@@ -13,11 +13,6 @@
 
       .title {
         flex: 1;
-
-        a {
-          text-decoration: none;
-          color: $white;
-        }
       }
 
       .searchSection {
@@ -47,13 +42,15 @@
     }
 
     .navbar {
-      padding: 0 50px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      width: 90%;
+      margin: 0 auto;
 
       ul {
         display: flex;
-        align-items: center;
 
         a {
           text-decoration: none;
@@ -176,16 +173,22 @@
   .navShowContainer {
     background-color: transparent;
     color: rgb(83, 83, 83);
+    height: 35px;
 
     .searchContainer {
+      padding-top: 10px;
       .title {
         a {
           text-decoration: none;
           color: rgb(83, 83, 83);
+          li {
+            padding-top: 10px;
+          }
         }
       }
 
       .searchSection {
+        margin-top: 15px;
         .searchInput {
           color: rgb(83, 83, 83);
           &::placeholder {
@@ -207,15 +210,21 @@
         a.nav {
           color: rgb(83, 83, 83);
           &:hover {
-            color: rgb(83, 83, 83);
+            color: rgb(146, 146, 146);
           }
 
           p {
             color: rgb(83, 83, 83);
+            &:hover {
+              color: rgb(146, 146, 146);
+            }
           }
         }
         a.nav-active {
-          color: $white;
+          color: rgb(146, 146, 146);
+          p {
+            color: rgb(146, 146, 146);
+          }
         }
       }
       .connection {
@@ -248,7 +257,7 @@
       font-size: 15px;
 
       .navbar {
-        padding: 0;
+        padding-top: 10px;
         padding-right: 10px;
 
         .navbarIntern a li {
