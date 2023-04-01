@@ -1,0 +1,26 @@
+services:
+  frontend:
+    image: jenniferdl/betaseries-clone
+    command: sh -c "npm run build"
+    env_file:
+      - ./.env
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - web-client-build:/app/build
+    ports:
+      - 3000:3000
+  nginx:
+    image: nginx:1.21.3
+    depends_on:
+      - frontend
+    restart: always
+    ports:
+      - ${GATEWAY_PORT:-8000}:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - web-client-build:/web-client-build
+      - ./logs:/var/log/nginx
+
+volumes:
+  web-client-build:

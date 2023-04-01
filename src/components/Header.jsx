@@ -55,13 +55,13 @@ const Header = () => {
   };
 
   const token = localStorage.getItem("token");
-  let config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   useEffect(() => {
+    let config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     axios
       .get(
         `https://api.betaseries.com/shows/search?key=${process.env.REACT_APP_KEY}&v=3.0&title=${searchInput}&nbpp=${nbpp}`,
@@ -77,7 +77,7 @@ const Header = () => {
       )
       .then((res) => res.data)
       .then((data) => setSearchResultMovie(data.movies));
-  }, [searchInput, nbpp, location]);
+  }, [searchInput, nbpp, location, token]);
 
   const handleLogOut = () => {
     localStorage.setItem("token", "");
