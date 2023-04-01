@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { MdComputer } from "react-icons/md";
 import { IoMdFilm, IoMdClose } from "react-icons/io";
@@ -8,24 +8,60 @@ import { BiChevronDown } from "react-icons/bi";
 import axios from "axios";
 import SearchShows from "./SearchShows";
 import SearchMovies from "./SearchMovies";
+import betaseriesIcon from "../assets/betaseries.svg";
 
 const Header = () => {
   let navigate = useNavigate();
+  const location = useLocation();
   const [search, setSearch] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [searchResultShow, setSearchResultShow] = useState([]);
   const [searchResultMovie, setSearchResultMovie] = useState([]);
   const [nbpp, setNbpp] = useState(5);
   const ref = useRef(null);
+  const safeDocument = typeof document !== "undefined" ? document : {};
+  const scrollBlocked = useRef();
+  const html = safeDocument.documentElement;
+  const { body } = safeDocument;
 
-  const token = localStorage.getItem("token");
-  let config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
+  const blockScroll = () => {
+    if (!body || !body.style || scrollBlocked.current) return;
+
+    const scrollBarWidth = window.innerWidth - html.clientWidth;
+    const bodyPaddingRight =
+      parseInt(
+        window.getComputedStyle(body).getPropertyValue("padding-right")
+      ) || 0;
+
+    html.style.position = "relative"; /* [1] */
+    html.style.overflow = "hidden"; /* [2] */
+    body.style.position = "relative"; /* [1] */
+    body.style.overflow = "hidden"; /* [2] */
+    body.style.paddingRight = `${bodyPaddingRight + scrollBarWidth}px`;
+
+    scrollBlocked.current = true;
   };
 
+  const allowScroll = () => {
+    if (!body || !body.style || !scrollBlocked.current) return;
+
+    html.style.position = "";
+    html.style.overflow = "";
+    body.style.position = "";
+    body.style.overflow = "";
+    body.style.paddingRight = "";
+
+    scrollBlocked.current = false;
+  };
+
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
+    let config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     axios
       .get(
         `https://api.betaseries.com/shows/search?key=${process.env.REACT_APP_KEY}&v=3.0&title=${searchInput}&nbpp=${nbpp}`,
@@ -41,7 +77,7 @@ const Header = () => {
       )
       .then((res) => res.data)
       .then((data) => setSearchResultMovie(data.movies));
-  }, [searchInput, nbpp]);
+  }, [searchInput, nbpp, location, token]);
 
   const handleLogOut = () => {
     localStorage.setItem("token", "");
@@ -49,24 +85,32 @@ const Header = () => {
   };
 
   async function handleFocusOnSearch() {
-    await setSearch(!search);
+    setSearch(!search);
     ref.current.focus();
+    blockScroll();
   }
 
   const handleSearchClose = () => {
     setSearch(!search);
     setSearchInput("");
+    allowScroll();
   };
 
   return (
     <div className="header">
-      <nav>
+      <nav
+        className={
+          location.pathname.includes("show/")
+            ? "navShowContainer navContainer"
+            : "navContainer"
+        }
+      >
         {token ? (
           search ? (
             <div className="searchContainer">
               <div className="title">
                 <NavLink to="/">
-                  <li>betaseries</li>
+                  <img src={betaseriesIcon} alt="logo betaseries" />
                 </NavLink>
               </div>
               <div className="searchSection">
@@ -97,14 +141,14 @@ const Header = () => {
               <ul>
                 <div className="title">
                   <NavLink to="/">
-                    <li>betaseries</li>
+                    <img src={betaseriesIcon} alt="logo betaseries" />
                   </NavLink>
                 </div>
                 <div className="navbarIntern">
                   <NavLink
                     to="/"
                     className={(nav) =>
-                      nav.isActive ? "nav-active" : "nav-inactive"
+                      nav.isActive ? `nav nav-active` : "nav"
                     }
                   >
                     <li>
@@ -120,8 +164,10 @@ const Header = () => {
                   <div className="navbar-dropdown">
                     <NavLink
                       to="/shows"
-                      className={(nav) =>
-                        nav.isActive ? "nav-active" : "nav-inactive"
+                      className={
+                        location.pathname.includes("show")
+                          ? `nav nav-active`
+                          : "nav"
                       }
                     >
                       <li>
@@ -135,17 +181,55 @@ const Header = () => {
                       </li>
                     </NavLink>
                     <div className="dropdown-content">
-                      <NavLink to="/shows">Toutes les séries</NavLink>
-                      <NavLink to="/my-shows">Mes séries</NavLink>
-                      <NavLink to="/episodes">Episodes à voir</NavLink>
-                      <NavLink to="/planning">Planning des sorties</NavLink>
+                      <NavLink
+                        to="/shows"
+                        className={
+                          location.pathname.includes("show")
+                            ? "navDropdown"
+                            : ""
+                        }
+                      >
+                        Toutes les séries
+                      </NavLink>
+                      <NavLink
+                        to="/my-shows"
+                        className={
+                          location.pathname.includes("myshow")
+                            ? "navDropdown"
+                            : ""
+                        }
+                      >
+                        Mes séries
+                      </NavLink>
+                      <NavLink
+                        to="/episodes"
+                        className={
+                          location.pathname.includes("episodes")
+                            ? "navDropdown"
+                            : ""
+                        }
+                      >
+                        Episodes à voir
+                      </NavLink>
+                      <NavLink
+                        to="/planning"
+                        className={
+                          location.pathname.includes("planning")
+                            ? "navDropdown"
+                            : ""
+                        }
+                      >
+                        Planning des sorties
+                      </NavLink>
                     </div>
                   </div>
                   <div className="navbar-dropdown">
                     <NavLink
                       to="/movies"
-                      className={(nav) =>
-                        nav.isActive ? "nav-active" : "nav-inactive"
+                      className={
+                        location.pathname.includes("movie")
+                          ? `nav nav-active`
+                          : "nav"
                       }
                     >
                       <li>
@@ -159,8 +243,26 @@ const Header = () => {
                       </li>
                     </NavLink>
                     <div className="dropdown-content">
-                      <NavLink to="/movies">Tous les films</NavLink>
-                      <NavLink to="/my-movies">Mes films</NavLink>
+                      <NavLink
+                        to="/movies"
+                        className={
+                          location.pathname.includes("/movies")
+                            ? "navDropdown"
+                            : ""
+                        }
+                      >
+                        Tous les films
+                      </NavLink>
+                      <NavLink
+                        to="/my-movies"
+                        className={
+                          location.pathname.includes("my-movies")
+                            ? "navDropdown"
+                            : ""
+                        }
+                      >
+                        Mes films
+                      </NavLink>
                     </div>
                   </div>
                 </div>
@@ -184,7 +286,7 @@ const Header = () => {
           <div className="searchContainer">
             <div className="title">
               <NavLink to="/">
-                <li>betaseries</li>
+                <img src={betaseriesIcon} alt="logo betaseries" />
               </NavLink>
             </div>
             <div className="searchSection">
@@ -215,7 +317,7 @@ const Header = () => {
             <ul>
               <div className="title">
                 <NavLink to="/">
-                  <li>betaseries</li>
+                  <img src={betaseriesIcon} alt="logo betaseries" />
                 </NavLink>
               </div>
               <div className="navbarIntern">
